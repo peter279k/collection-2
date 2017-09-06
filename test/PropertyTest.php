@@ -31,9 +31,15 @@ class PropertyTest extends PHPUnit_Framework_TestCase
         $reflection = new \ReflectionClass($property);
         $method = $reflection->getMethod('getPropertyNodeValue');
         $method->setAccessible(true);
+        
         $value = $method->invoke($property, 'b/d/f/g');
-    
         $this->assertEquals( 4, $value );
+    
+        $value = $method->invoke($property, 'b/x');
+        $this->assertNull( $value );
+    
+        $value = $method->invoke($property, 'x');
+        $this->assertNull( $value );
     }
     
     public function testGetIntegerHierarchy()
