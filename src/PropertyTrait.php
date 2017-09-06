@@ -1,14 +1,12 @@
 <?php
 namespace Calgamo\Collection;
 
-use Calgamo\Util\ExceptionHelper;
 use Calgamo\BasicTypes\CString as CString;
 use Calgamo\BasicTypes\CBoolean as CBoolean;
 use Calgamo\BasicTypes\Number\CFloat as CFloat;
 use Calgamo\BasicTypes\Number\CInteger as CInteger;
 use Calgamo\BasicTypes\Util\BoxingUtil;
 use Calgamo\BasicTypes\Util\ScalarUtil;
-use Calgamo\Collection\Exception\PropertyNodeNotFoundException;
 use Calgamo\Collection\HashMap as HashMap;
 
 /**
@@ -281,7 +279,7 @@ trait PropertyTrait
         $node = $data;
         while(($node_key = array_shift($node_keys)) && (count($node_keys) > 0)){
             if (!isset($node[$node_key])){
-                ExceptionHelper::throw( new PropertyNodeNotFoundException($key) );
+                return NULL;
             }
             $node = $node[$node_key];
         }
