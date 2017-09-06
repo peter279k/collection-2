@@ -1,0 +1,28 @@
+{
+  "name": "calgamo/collection",
+  "description": "Collection library for Calgamo Framework.",
+  "keywords": ["PHP","Primitive","Type"],
+  "homepage": "https://github.com/calgamo/collection",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Katsuki Shuto",
+      "email": "stk2k@sazysoft.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*",
+    "calgamo/exception": "0.1.*@dev",
+    "calgamo/util": "0.1.*@dev",
+    "calgamo/basic-types": "0.1.*@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Calgamo\\Collection\\": "src/"
+    }
+  }
+}
