@@ -94,7 +94,7 @@ trait PropertyTrait
      *
      * @return ArrayList|NULL
      */
-    public  function getList( $key, $default_value = NULL )
+    public  function getList( $key, array $default_value = NULL )
     {
         $value = $this->getPropertyNodeValue( $key );
 
@@ -128,7 +128,7 @@ trait PropertyTrait
      *
      * @return HashMap|NULL
      */
-    public  function getHashMap( $key, $default_value = NULL )
+    public  function getHashMap( $key, array $default_value = NULL )
     {
         $value = $this->getPropertyNodeValue( $key );
 
@@ -158,11 +158,11 @@ trait PropertyTrait
      * Get as int value
      *
      * @param string $key             key string for hash map
-     * @param array $default_value   default value
+     * @param int $default_value   default value
      *
      * @return CInteger|NULL
      */
-    public  function getInteger( $key, $default_value = NULL )
+    public  function getInteger( $key, int $default_value = NULL )
     {
         $value = $this->getPropertyNodeValue( $key );
 
@@ -198,7 +198,7 @@ trait PropertyTrait
      *
      * @return CFloat|NULL
      */
-    public  function getFloat( $key, $default_value = NULL )
+    public  function getFloat( $key, float $default_value = NULL )
     {
         $value = $this->getPropertyNodeValue( $key );
 
@@ -234,7 +234,7 @@ trait PropertyTrait
      *
      * @return CBoolean|NULL
      */
-    public  function getBoolean( $key, $default_value = NULL )
+    public  function getBoolean( $key, bool $default_value = NULL )
     {
         $value = $this->getPropertyNodeValue( $key );
 
