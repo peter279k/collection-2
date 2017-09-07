@@ -215,37 +215,45 @@ class Collection implements \Countable, \IteratorAggregate
     /**
      *  Replace with other assoc or HashMap
      *
-     *    @param array|HashMap $replace
+     *  @param array|Collection $replace
+     *  @param bool $recursive
+     *
+     * @return Collection
      */
-    public function replace( $replace )
+    public function replace( $replace, $recursive = false )
     {
-        if ($replace instanceof HashMap){
-            $this->values = $replace->toArray();
-        }
-        else if ( is_array($replace) ){
-            $this->values = $replace;
+        $replace = ($replace instanceof Collection) ? $replace->toArray() : $replace;
+        if ( is_array($replace) ){
+            $values = $this->values;
+            $values = $recursive ? array_replace_recursive($values, $replace) : array_replace($values, $replace);
+            $this->values = $values;
         }
         else{
             ExceptionHelper::throw( new InvalidArgumentException(1, $replace) );
         }
+        return $this;
     }
     
     /**
      *  Merge with other assoc or HashMap
      *
-     *  @param array|HashMap $merge
+     *  @param array|Collection $merge
+     *  @param bool $recursive
+     *
+     * @return Collection
      */
-    public function merge( $merge )
+    public function merge( $merge, $recursive = false )
     {
-        if ($merge instanceof HashMap){
-            $this->values = array_merge($this->values, $merge->toArray());
-        }
-        else if ( is_array($merge) ){
-            $this->values = array_merge($this->values, $merge);
+        $merge = ($merge instanceof Collection) ? $merge->toArray() : $merge;
+        if ( is_array($merge) ){
+            $values = $this->values;
+            $values = $recursive ? array_merge_recursive($values, $merge) : array_merge($values, $merge);
+            $this->values = $values;
         }
         else{
             ExceptionHelper::throw( new InvalidArgumentException(1, $merge) );
         }
+        return $this;
     }
     
     /**
