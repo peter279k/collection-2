@@ -167,5 +167,15 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $flip = $vector->flip();
         $this->assertEquals( ['David'=>'name', 21=>'age'], $flip->getAll() );
     }
+    public function testSerializeUnserialize()
+    {
+        $vector = new Collection(['apple', 'banana', 'kiwi']);
+        $data = $vector->serialize();
+        $this->assertEquals( 'a:3:{i:0;s:5:"apple";i:1;s:6:"banana";i:2;s:4:"kiwi";}', $data );
+        $vector ->remove(1,1);
+        $this->assertEquals( ['apple', 'kiwi'], $vector->unbox() );
+        $vector->unserialize($data);
+        $this->assertEquals( ['apple', 'banana', 'kiwi'], $vector->unbox() );
+    }
     
 }

@@ -1,7 +1,8 @@
 <?php
 namespace Calgamo\Collection;
 
-class VectorTest extends \PHPUnit_Framework_TestCase
+
+class ArrayListTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
@@ -9,7 +10,7 @@ class VectorTest extends \PHPUnit_Framework_TestCase
     
     public function testSerializeUnserialize()
     {
-        $vector = new Vector(['apple', 'banana', 'kiwi']);
+        $vector = new ArrayList(['apple', 'banana', 'kiwi']);
         $data = $vector->serialize();
         $this->assertEquals( 'a:3:{i:0;s:5:"apple";i:1;s:6:"banana";i:2;s:4:"kiwi";}', $data );
         $vector ->remove(1,1);

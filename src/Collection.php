@@ -16,7 +16,7 @@ use Calgamo\Collection\Exception\NonArrayException;
  * @since      php 7.0
  * @copyright  Copyright © 2017, stk2k, sazysoft
  */
-class Collection implements \Countable, \IteratorAggregate
+class Collection implements \Countable, \IteratorAggregate, \Serializable
 {
     protected $values;
 
@@ -37,7 +37,12 @@ class Collection implements \Countable, \IteratorAggregate
             $this->values = array();
         }
     }
-    
+    public function serialize() {
+        return serialize($this->values);
+    }
+    public function unserialize($data) {
+        $this->values = unserialize($data);
+    }
     /**
      *  Returns number of items
      *
