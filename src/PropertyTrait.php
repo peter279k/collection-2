@@ -22,27 +22,6 @@ use Calgamo\Collection\HashMap as HashMap;
 trait PropertyTrait
 {
     /**
-     * Returns internal values
-     * 
-     * @return \ArrayAccess|array
-     */
-    abstract public function getAll() : array;
-    
-    /**
-     * update internal values
-     *
-     * @param array $values
-     */
-    abstract public function replace($values);
-    
-    /**
-     * merge internal values
-     *
-     * @param array $values
-     */
-    abstract public function merge($values);
-    
-    /**
      * Get as raw value
      *
      * @param string $key             key string for hash map
