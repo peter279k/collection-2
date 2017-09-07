@@ -1,9 +1,6 @@
 <?php
 namespace Calgamo\Collection;
 
-use Calgamo\Util\ExceptionHelper;
-use Calgamo\Exception\Runtime\InvalidArgumentException;
-
 /**
  * List class
  *
@@ -83,42 +80,6 @@ class ArrayList extends Collection
         return new ArrayList( $new_array );
     }
     
-    /**
-     *  Replace with other assoc or HashMap
-     *
-     *    @param array|HashMap $replace
-     */
-    public function replace( $replace )
-    {
-        if ($replace instanceof HashMap){
-            $this->values = $replace->toArray();
-        }
-        else if ( is_array($replace) ){
-            $this->values = $replace;
-        }
-        else{
-            ExceptionHelper::throw( new InvalidArgumentException(1, $replace) );
-        }
-    }
-    
-    /**
-     *  Merge with other assoc or HashMap
-     *
-     *  @param array|HashMap $merge
-     */
-    public function merge( $merge )
-    {
-        if ($merge instanceof HashMap){
-            $this->values = array_merge($this->values, $merge->toArray());
-        }
-        else if ( is_array($merge) ){
-            $this->values = array_merge($this->values, $merge);
-        }
-        else{
-            ExceptionHelper::throw( new InvalidArgumentException(1, $merge) );
-        }
-    }
-
     /*
      *    文字列で連結する
      */
