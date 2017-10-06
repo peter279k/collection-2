@@ -36,7 +36,7 @@ require 'vendor/autoload.php';
 ```
 
 ## License
-[MIT](https://github.com/calgamo/collection/blob/master/LICENSE)
+This library is licensed under the MIT license.
 
 ## Author
 
