@@ -6,8 +6,8 @@ php:
   - 7.2
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev --prefer-source
+  - composer require phpunit/phpunit:4.8.* satooshi/php-coveralls:dev-master
+  - composer install --dev
 
 script:
   - mkdir -p build/logs
