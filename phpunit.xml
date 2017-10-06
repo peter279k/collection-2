@@ -8,6 +8,8 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          syntaxCheck="false"
+         forceCoversAnnotation="false"
+         verbose="true"
          bootstrap="tests/bootstrap.php"
 >
     <testsuites>
