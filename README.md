@@ -1,6 +1,8 @@
 Calgamo/Collection, Collection library for Calgamo Framework.
 =======================
 
+[![Build Status](https://travis-ci.org/calgamo/collection.svg?branch=master)](https://travis-ci.org/calgamo/collection)
+
 ## Description
 
 Calgamo/Collection is a collection library for calgamo framework.
