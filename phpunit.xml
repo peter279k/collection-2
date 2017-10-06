@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="Calgamo/Collection Tests">
-            <directory>./test/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
