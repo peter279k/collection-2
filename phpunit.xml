@@ -10,11 +10,11 @@
          syntaxCheck="false"
          forceCoversAnnotation="false"
          verbose="true"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="test/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Calgamo/Collection Tests">
-            <directory>./tests/</directory>
+            <directory>./test/</directory>
         </testsuite>
     </testsuites>
 
