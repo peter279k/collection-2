@@ -1,8 +1,8 @@
 <?php
-namespace Calgamo\Collection;
+use PHPUnit\Framework\TestCase;
+use Calgamo\Collection\HashMap;
 
-
-class HashMapTest extends \PHPUnit_Framework_TestCase
+class HashMapTest extends TestCase
 {
     protected function setUp()
     {
@@ -10,7 +10,7 @@ class HashMapTest extends \PHPUnit_Framework_TestCase
     
     public function testSerializeUnserialize()
     {
-        $vector = new ArrayList(['name' => 'David', 'age' => 21, 'gender' => 'male']);
+        $vector = new HashMap(['name' => 'David', 'age' => 21, 'gender' => 'male']);
         $data = $vector->serialize();
         $this->assertEquals( 'a:3:{s:4:"name";s:5:"David";s:3:"age";i:21;s:6:"gender";s:4:"male";}', $data );
         $vector->remove(1,1);

@@ -1,8 +1,8 @@
 <?php
-namespace Calgamo\Collection;
+use PHPUnit\Framework\TestCase;
+use Calgamo\Collection\ArrayList;
 
-
-class ArrayListTest extends \PHPUnit_Framework_TestCase
+class ArrayListTest extends TestCase
 {
     protected function setUp()
     {

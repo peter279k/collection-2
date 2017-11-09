@@ -1,7 +1,8 @@
 <?php
-namespace Calgamo\Collection;
+use PHPUnit\Framework\TestCase;
+use Calgamo\Collection\Vector;
 
-class VectorTest extends \PHPUnit_Framework_TestCase
+class VectorTest extends TestCase
 {
     protected function setUp()
     {

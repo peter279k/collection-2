@@ -1,7 +1,8 @@
 <?php
-namespace Calgamo\Collection;
+use PHPUnit\Framework\TestCase;
+use Calgamo\Collection\Collection;
 
-class CollectionTest extends \PHPUnit_Framework_TestCase
+class CollectionTest extends TestCase
 {
     protected function setUp()
     {

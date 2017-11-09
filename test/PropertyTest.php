@@ -1,5 +1,5 @@
 <?php
-
+use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\Property;
 use Calgamo\BasicTypes\Number\CInteger;
 use Calgamo\BasicTypes\Number\CFloat;
@@ -7,7 +7,7 @@ use Calgamo\BasicTypes\CBoolean;
 use Calgamo\Collection\ArrayList;
 use Calgamo\Collection\HashMap;
 
-class PropertyTest extends PHPUnit_Framework_TestCase
+class PropertyTest extends TestCase
 {
     protected function setUp()
     {
