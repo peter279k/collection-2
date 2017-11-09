@@ -1,7 +1,7 @@
 Calgamo/Collection, Collection library for Calgamo Framework.
 =======================
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/calgamo/collection.svg?style=flat-square)](https://packagist.org/calgamo/collection)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/calgamo/collection.svg?style=flat-square)](https://packagist.org/packages/calgamo/collection)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://travis-ci.org/calgamo/collection.svg?branch=master)](https://travis-ci.org/calgamo/collection)
 [![Coverage Status](https://coveralls.io/repos/github/calgamo/collection/badge.svg?branch=master)](https://coveralls.io/github/calgamo/collection?branch=master)
