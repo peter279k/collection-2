@@ -2,26 +2,18 @@
 namespace Calgamo\Collection;
 
 use Calgamo\Util\Util;
-use Calgamo\Util\ExceptionHelper;
-use Calgamo\Exception\Runtime\InvalidArgumentException;
 use Calgamo\Collection\Exception\NonArrayException;
 
-/**
- * Collection class
- *
- * for PHP version 7
- *
- * @package    calgamo/collection
- * @author     stk2k(Katsuki Shuto)<stk2k@sazysoft.com>
- * @since      php 7.0
- * @copyright  Copyright © 2017, stk2k, sazysoft
- */
 class Collection implements \Countable, \IteratorAggregate, \Serializable
 {
     protected $values;
-
-    /*
-     *    コンストラクタ
+    
+    /**
+     * Collection constructor.
+     *
+     * @param array $values
+     *
+     * @throws NonArrayException
      */
     public function __construct( $values = array() )
     {
@@ -30,7 +22,7 @@ class Collection implements \Countable, \IteratorAggregate, \Serializable
                 $this->values = $values;
             }
             else{
-                ExceptionHelper::throw( new NonArrayException($values) );
+                throw new NonArrayException($values);
             }
         }
         else{
@@ -191,7 +183,7 @@ class Collection implements \Countable, \IteratorAggregate, \Serializable
      *
      * @return array
      */
-    public function getAll()
+    public function getAll() : array
     {
         return $this->values;
     }
@@ -225,16 +217,13 @@ class Collection implements \Countable, \IteratorAggregate, \Serializable
      *
      * @return Collection
      */
-    public function replace( $replace, $recursive = false )
+    public function replace( array $replace, bool $recursive = false )
     {
         $replace = ($replace instanceof Collection) ? $replace->toArray() : $replace;
         if ( is_array($replace) ){
             $values = $this->values;
             $values = $recursive ? array_replace_recursive($values, $replace) : array_replace($values, $replace);
             $this->values = $values;
-        }
-        else{
-            ExceptionHelper::throw( new InvalidArgumentException(1, $replace) );
         }
         return $this;
     }
@@ -255,9 +244,6 @@ class Collection implements \Countable, \IteratorAggregate, \Serializable
             $values = $recursive ? array_merge_recursive($values, $merge) : array_merge($values, $merge);
             $this->values = $values;
         }
-        else{
-            ExceptionHelper::throw( new InvalidArgumentException(1, $merge) );
-        }
         return $this;
     }
     
@@ -266,7 +252,7 @@ class Collection implements \Countable, \IteratorAggregate, \Serializable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         if ( is_array($this->values) ){
             return $this->values;

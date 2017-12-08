@@ -1,22 +1,14 @@
 <?php
 namespace Calgamo\Collection;
 
-/**
- * Hash map class
- *
- * for PHP version 7
- *
- * @package    calgamo/collection
- * @author     stk2k(Katsuki Shuto)<stk2k@sazysoft.com>
- * @since      php 7.0
- * @copyright  Copyright © 2017, stk2k, sazysoft
- */
 class HashMap extends Collection implements \ArrayAccess, \IteratorAggregate
 {
     /**
      * HashMap constructor.
      *
      * @param array $values
+     *
+     * @throws Exception\NonArrayException
      */
     public function __construct( $values = array() )
     {

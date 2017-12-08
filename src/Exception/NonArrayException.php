@@ -4,16 +4,6 @@ namespace Calgamo\Collection\Exception;
 use Calgamo\Exception\CalgamoException;
 use Calgamo\Exception\Runtime\RuntimeExceptionInterface;
 
-/**
- * exception caused by not suitable for array object
- *
- * for PHP version 7
- *
- * @package    exceptions
- * @author     stk2k(Katsuki Shuto)<stk2k@sazysoft.com>
- * @since      php 7.0
- * @copyright  Copyright © 2017, stk2k, sazysoft
- */
 class NonArrayException extends CalgamoException implements CollectionExceptionInterface, RuntimeExceptionInterface
 {
     /**

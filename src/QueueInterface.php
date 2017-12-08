@@ -1,16 +1,6 @@
 <?php
 namespace Calgamo\Collection;
 
-/**
- * Queue interface
- *
- * for PHP version 7
- *
- * @package    class.core
- * @author     stk2k(Katsuki Shuto)<stk2k@sazysoft.com>
- * @since      php 7.0
- * @copyright  Copyright © 2017, stk2k, sazysoft
- */
 interface QueueInterface
 {
     /*
