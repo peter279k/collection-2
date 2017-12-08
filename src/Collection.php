@@ -2,7 +2,6 @@
 namespace Calgamo\Collection;
 
 use Calgamo\Util\Util;
-use Calgamo\Collection\Exception\NonArrayException;
 
 class Collection implements \Countable, \IteratorAggregate, \Serializable
 {
@@ -12,26 +11,16 @@ class Collection implements \Countable, \IteratorAggregate, \Serializable
      * Collection constructor.
      *
      * @param array $values
-     *
-     * @throws NonArrayException
      */
-    public function __construct( $values = array() )
+    public function __construct( array $values = array() )
     {
-        if ( $values ){
-            if ( is_array($values) ){
-                $this->values = $values;
-            }
-            else{
-                throw new NonArrayException($values);
-            }
-        }
-        else{
-            $this->values = array();
-        }
+        $this->values = $values;
     }
+    
     public function serialize() {
         return serialize($this->values);
     }
+    
     public function unserialize($data) {
         $this->values = unserialize($data);
     }

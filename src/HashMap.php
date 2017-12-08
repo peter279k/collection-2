@@ -7,8 +7,6 @@ class HashMap extends Collection implements \ArrayAccess, \IteratorAggregate
      * HashMap constructor.
      *
      * @param array $values
-     *
-     * @throws Exception\NonArrayException
      */
     public function __construct( $values = array() )
     {
