@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "calgamo/exception": "0.1.*@dev",
-    "calgamo/util": "0.1.*@dev",
-    "calgamo/basic-types": "0.1.*@dev"
+    "calgamo/exception": "~0.1",
+    "calgamo/util": "~0.1",
+    "calgamo/basic-types": "~0.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.3.0",
