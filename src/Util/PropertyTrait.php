@@ -236,10 +236,10 @@ trait PropertyTrait
      */
     private function setPropertyNodeValue(string $key, $value)
     {
-        $data = $this->toArray();
+        $data = $this->getValues();
         if (strpos($key,'/')===false){
             $data[$key] = $value;
-            $this->replace($data);
+            $this->setValues($data);
             return;
         }
         $node_keys = explode('/', $key);
@@ -256,7 +256,7 @@ trait PropertyTrait
             $child_array = $new_array;
         }
         $new_data = array_replace_recursive($data, $new_array);
-        $this->replace($new_data);
+        $this->setValues($new_data);
     }
 }
 
