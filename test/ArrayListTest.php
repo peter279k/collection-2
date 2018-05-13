@@ -7,7 +7,6 @@ class ArrayListTest extends TestCase
     public function testAdd()
     {
         $list = new ArrayList(['apple', 'banana', 'kiwi']);
-
         $this->assertEquals( ['apple', 'banana', 'kiwi'], $list->toArray() );
 
         $list->add('orange');
@@ -16,7 +15,6 @@ class ArrayListTest extends TestCase
     public function testAddAll()
     {
         $list = new ArrayList(['apple', 'banana', 'kiwi']);
-
         $this->assertEquals( ['apple', 'banana', 'kiwi'], $list->toArray() );
 
         $list->addAll(['orange', 'mango']);

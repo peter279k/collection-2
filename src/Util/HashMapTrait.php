@@ -18,6 +18,14 @@ trait HashMapTrait
     abstract protected function setValues(array $values);
 
     /**
+     * get list of keys
+     */
+    public function keys() : array
+    {
+        return array_keys($this->getValues());
+    }
+
+    /**
      *  check if specified key is in the list
      *
      * @param mixed $key

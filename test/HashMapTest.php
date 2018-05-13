@@ -17,6 +17,12 @@ class HashMapTest extends TestCase
         $this->assertInstanceOf(ImmutableHashMap::class, $map->freeze());
         $this->assertEquals(['age' => 21, 'name' => 'David'], $map->freeze()->toArray());
     }
+    public function testKeys()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertEquals(['age', 'name'], $map->keys());
+    }
     public function testKeyExists()
     {
         $map = new HashMap(['age' => 21, 'name' => 'David']);

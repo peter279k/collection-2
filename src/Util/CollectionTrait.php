@@ -52,14 +52,6 @@ trait CollectionTrait
     }
 
     /**
-     * get list of keys
-     */
-    public function keys() : array
-    {
-        return array_keys($this->getValues());
-    }
-
-    /**
      * Check if the collection is empty
      *
      * @return bool
@@ -72,13 +64,41 @@ trait CollectionTrait
     /**
      * check if contains a value
      *
-     * @param mixed $value
+     * @param mixed $items
      *
      * @return bool
      */
-    public function contains($value) : bool
+    public function contains(... $items) : bool
     {
-        return in_array($value, $this->getValues());
+        $values = $this->getValues();
+        foreach($items as $item)
+        {
+            if (!in_array($item, $values, true))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * check if contains a value
+     *
+     * @param array|Collection $items
+     *
+     * @return bool
+     */
+    public function containsAll($items)
+    {
+        $values = $this->getValues();
+        foreach($items as $item)
+        {
+            if (!in_array($item, $values, true))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -113,26 +133,37 @@ trait CollectionTrait
     /**
      * Replace with other assoc or HashMap
      *
-     * @param array $replace
-     * @param bool $recursive
+     * @param mixed $from
+     * @param mixed $to
      */
-    public function replace(array $replace, bool $recursive = false)
+    public function replace($from, $to)
     {
         $values = $this->getValues();
-        $values = $recursive ? array_replace_recursive($values, $replace) : array_replace($values, $replace);
+        foreach($values as $key => $value)
+        {
+            if ($value === $from)
+            {
+                $values[$key] = $to;
+            }
+        }
         $this->setValues($values);
     }
 
     /**
-     * Merge with other assoc or HashMap
+     * Replace with other assoc or HashMap
      *
-     * @param array $merge
-     * @param bool $recursive
+     * @param array $from_to
      */
-    public function merge(array $merge, $recursive = false)
+    public function replaceAll(array $from_to)
     {
         $values = $this->getValues();
-        $values = $recursive ? array_merge_recursive($values, $merge) : array_merge($values, $merge);
+        foreach($values as $key => $value)
+        {
+            if (isset($from_to[$value]))
+            {
+                $values[$key] = $from_to[$value];
+            }
+        }
         $this->setValues($values);
     }
 
@@ -164,12 +195,6 @@ trait CollectionTrait
      */
     public function __toString() : string
     {
-        $string = get_class($this) . '@' . spl_object_hash($this) . ' values:';
-        foreach($this as $key => $value){
-            $key = Util::toString($key);
-            $value = Util::toString($value);
-            $string .= $key . '=' . $value . '/';
-        }
-        return $string;
+        return get_class($this) . ' values:' . json_encode($this->values);
     }
 }
