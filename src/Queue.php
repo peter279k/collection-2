@@ -1,9 +1,9 @@
 <?php
 namespace Calgamo\Collection;
 
-class Queue extends ArrayList implements QueueInterface
+class Queue extends ArrayList
 {
-    /*
+    /**
      * Take item from the queue
      *
      * @return mixed
@@ -13,7 +13,7 @@ class Queue extends ArrayList implements QueueInterface
         return $this->shift();
     }
 
-    /*
+    /**
      * Add item to the queue
      *
      * @param mixed $item

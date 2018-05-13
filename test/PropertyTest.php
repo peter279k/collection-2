@@ -4,9 +4,22 @@ use Calgamo\Test\TestCase\PhpUnitTestCase;
 use Calgamo\Collection\Property;
 use Calgamo\Collection\ArrayList;
 use Calgamo\Collection\HashMap;
+use Calgamo\Collection\Immutable\ImmutableProperty;
 
 class PropertyTest extends PhpUnitTestCase
 {
+    public function testFreeze()
+    {
+        $property = new Property();
+
+        $this->assertInstanceOf(ImmutableProperty::class, $property->freeze());
+        $this->assertEquals([], $property->freeze()->toArray());
+
+        $property = new Property(['age' => 21, 'name' => 'David']);
+
+        $this->assertInstanceOf(ImmutableProperty::class, $property->freeze());
+        $this->assertEquals(['age' => 21, 'name' => 'David'], $property->freeze()->toArray());
+    }
     public function testGetPropertyNodeValue()
     {
         $property = new Property([

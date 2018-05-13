@@ -1,18 +1,9 @@
 <?php
-namespace Calgamo\Collection;
+namespace Calgamo\Collection\Util;
 
-use Calgamo\Collection\HashMap as HashMap;
+use Calgamo\Collection\HashMap;
+use Calgamo\Collection\ArrayList;
 
-/**
- * Property trait
- *
- * for PHP version 7
- *
- * @package    traits
- * @author     stk2k(Katsuki Shuto)<stk2k@sazysoft.com>
- * @since      php 7.0
- * @copyright  Copyright © 2017, stk2k, sazysoft
- */
 trait PropertyTrait
 {
     /**
@@ -222,7 +213,7 @@ trait PropertyTrait
      */
     private function getPropertyNodeValue(string $key)
     {
-        $data = $this->getAll();
+        $data = $this->toArray();
         if (strpos($key,'/')===false){
             return $data[$key] ?? NULL;
         }
@@ -245,7 +236,7 @@ trait PropertyTrait
      */
     private function setPropertyNodeValue(string $key, $value)
     {
-        $data = $this->getAll();
+        $data = $this->toArray();
         if (strpos($key,'/')===false){
             $data[$key] = $value;
             $this->replace($data);

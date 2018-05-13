@@ -1,21 +1,82 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\HashMap;
+use Calgamo\Collection\Immutable\ImmutableHashMap;
 
 class HashMapTest extends TestCase
 {
-    protected function setUp()
+    public function testFreeze()
     {
+        $map = new HashMap();
+
+        $this->assertInstanceOf(ImmutableHashMap::class, $map->freeze());
+        $this->assertEquals([], $map->freeze()->toArray());
+
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertInstanceOf(ImmutableHashMap::class, $map->freeze());
+        $this->assertEquals(['age' => 21, 'name' => 'David'], $map->freeze()->toArray());
     }
-    
-    public function testSerializeUnserialize()
+    public function testKeyExists()
     {
-        $vector = new HashMap(['name' => 'David', 'age' => 21, 'gender' => 'male']);
-        $data = $vector->serialize();
-        $this->assertEquals( 'a:3:{s:4:"name";s:5:"David";s:3:"age";i:21;s:6:"gender";s:4:"male";}', $data );
-        $vector->remove(1,1);
-        $this->assertEquals( ['name' => 'David', 'gender' => 'male'], $vector->unbox() );
-        $vector->unserialize($data);
-        $this->assertEquals( ['name' => 'David', 'age' => 21, 'gender' => 'male'], $vector->unbox() );
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertTrue($map->keyExists('age'));
+        $this->assertTrue($map->keyExists('name'));
+        $this->assertFalse($map->keyExists('height'));
+    }
+    public function testGet()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertEquals(21, $map->get('age'));
+        $this->assertEquals('David', $map->get('name'));
+        $this->assertEquals(null, $map->get('height'));
+    }
+    public function testSet()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertEquals(21, $map->get('age'));
+        $map->set('age', 22);
+        $this->assertEquals(22, $map->get('age'));
+    }
+    public function testOffsetGet()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertEquals(21, $map['age']);
+        $this->assertEquals('David', $map['name']);
+        $this->assertEquals(null, $map['height']);
+    }
+    public function testOffsetSet()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertEquals(21, $map['age']);
+        $map['age'] = 22;
+        $this->assertEquals(22, $map['age']);
+    }
+    public function testOffsetExists()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+
+        $this->assertTrue(isset($map['age']));
+        $this->assertTrue(isset($map['name']));
+        $this->assertFalse(isset($map['height']));
+    }
+    public function testOffsetUnset()
+    {
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+        unset($map['age']);
+        $this->assertEquals(['name' => 'David'], $map->toArray());
+
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+        unset($map['name']);
+        $this->assertEquals(['age' => 21], $map->toArray());
+
+        $map = new HashMap(['age' => 21, 'name' => 'David']);
+        unset($map['height']);
+        $this->assertEquals(['age' => 21, 'name' => 'David'], $map->toArray());
     }
 }

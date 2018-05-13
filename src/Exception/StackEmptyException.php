@@ -2,6 +2,7 @@
 namespace Calgamo\Collection\Exception;
 
 use Calgamo\Collection\Stack;
+use Calgamo\Collection\Immutable\ImmutableStack;
 use Calgamo\Exception\CalgamoException;
 use Calgamo\Exception\Runtime\RuntimeExceptionInterface;
 
@@ -10,7 +11,7 @@ class StackEmptyException extends CalgamoException implements CollectionExceptio
     /**
      * StackEmptyException constructor.
      *
-     * @param Stack $stack
+     * @param Stack|ImmutableStack $stack
      * @param \Exception $prev
      */
     public function __construct( $stack, $prev = NULL )
