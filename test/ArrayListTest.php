@@ -45,6 +45,19 @@ class ArrayListTest extends TestCase
         $this->assertSame(['apple', 'banana', 'kiwi', 'orange', 'mango'], $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
     }
+    public function testPop()
+    {
+        $list = new ArrayList(['apple', 'banana', 'kiwi']);
+        $ret = $list->pop($item);
+        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());    // immutable
+        $this->assertSame(['apple', 'banana'], $ret->toArray());
+        $this->assertSame('kiwi', $item);
+
+        $ret = $ret->pop($item);
+        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());    // immutable
+        $this->assertSame(['apple'], $ret->toArray());
+        $this->assertSame('banana', $item);
+    }
     public function testFirst()
     {
         $list = new ArrayList(['apple', 'banana', 'kiwi']);

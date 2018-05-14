@@ -34,3 +34,14 @@ echo ' ' . $list->reduce(function($tmp,$item){ return $tmp+strlen($item); }) . P
 echo 'shift:' . PHP_EOL;
 echo ' ' . $list->shift($item)->join() . PHP_EOL;       // green,blue
 
+echo 'unshift:' . PHP_EOL;
+echo ' ' . $list->unshift('yellow')->join() . PHP_EOL;       // yellow,red,green,blue
+
+echo 'push:' . PHP_EOL;
+echo ' ' . $list->push('yellow')->join() . PHP_EOL;       // red,green,blue,yellow
+
+echo 'pop:' . PHP_EOL;
+echo ' ' . $list->pop($item)->join() . PHP_EOL;       // red,green
+
+echo 'sort:' . PHP_EOL;
+echo ' ' . $list->sort()->join() . PHP_EOL;       // blue,green,red

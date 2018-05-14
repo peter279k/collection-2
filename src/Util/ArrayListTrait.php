@@ -32,6 +32,18 @@ trait ArrayListTrait
     }
 
     /**
+     * Pop item from stack
+     *
+     * @param mixed &$item
+     *
+     * @return mixed
+     */
+    public function pop(&$item) : ArrayList
+    {
+        return new ArrayList($this->_pop($item));
+    }
+
+    /**
      * Get head element of the array
      *
      * @param callable $callback
