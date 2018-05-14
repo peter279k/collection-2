@@ -1,4 +1,4 @@
-Calgamo/Collection, A generic collection & data structure library.
+A generic collection & data structure library.
 =======================
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/calgamo/collection.svg?style=flat-square)](https://packagist.org/packages/calgamo/collection)
