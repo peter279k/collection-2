@@ -51,6 +51,38 @@ class StackTest extends TestCase
         $this->assertSame(['apple', 'banana', 'kiwi'], $stack->toArray());
         $this->assertSame('kiwi', $ret);
     }
+    public function testReverse()
+    {
+        $list = new Stack(['apple', 'banana', 'kiwi']);
+        $ret = $list->reverse();
+        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['kiwi', 'banana', 'apple'], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
+    }
+    public function testReplace()
+    {
+        $list = new Stack(['apple', 'banana', 'kiwi']);
+        $ret = $list->replace('apple', 'mango');
+        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['mango', 'banana', 'kiwi'], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
+
+        $list = new Stack(['apple', 'banana', 'kiwi']);
+        $ret = $list->replace('banana', 'orange');
+        $this->assertInstanceOf(Stack::class, $list->replace('banana', 'orange'));
+        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['apple', 'orange', 'kiwi'], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
+    }
+    public function testReplaceAll()
+    {
+        $list = new Stack(['apple', 'banana', 'kiwi']);
+        $replace = ['apple' => 'mango', 'banana' => 'orange'];
+        $ret = $list->replaceAll($replace);
+        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['mango', 'orange', 'kiwi'], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
+    }
     public function testSort()
     {
         $list = new Stack(['apple', 'banana', 'kiwi']);

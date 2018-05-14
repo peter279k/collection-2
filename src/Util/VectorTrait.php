@@ -10,16 +10,6 @@ trait VectorTrait
     use PhpArrayTrait;
 
     /**
-     *  Return an array with elements in reverse order
-     *
-     * @return Vector
-     */
-    public function reverse()
-    {
-        return new Vector($this->_reverse());
-    }
-
-    /**
      *  Get element value
      *
      * @param int $index
@@ -110,6 +100,164 @@ trait VectorTrait
         }
 
         return FALSE;
+    }
+
+    /**
+     *  Add element to tail
+     *
+     * @param mixed $items
+     *
+     * @return Vector
+     */
+    public function push(... $items) : Vector
+    {
+        return new Vector($this->_pushAll($items));
+    }
+
+    /**
+     *  Add array data
+     *
+     *  @param array $items
+     *
+     * @return Vector
+     */
+    public function pushAll(array $items) : Vector
+    {
+        return new Vector($this->_pushAll($items));
+    }
+
+    /**
+     * Pop item from stack
+     *
+     * @param mixed &$item
+     *
+     * @return mixed
+     */
+    public function pop(&$item) : Vector
+    {
+        return new Vector($this->_pop($item));
+    }
+
+    /**
+     * Get head element of the array
+     *
+     * @param callable $callback
+     *
+     * @return mixed
+     */
+    public function first(callable $callback = null)
+    {
+        return $this->_first($callback);
+    }
+
+    /**
+     * Get tail element of the array
+     *
+     * @param callable $callback
+     *
+     * @return mixed
+     */
+    public function last(callable $callback = null)
+    {
+        return $this->_last($callback);
+    }
+
+    /**
+     * remove element by index
+     *
+     * @param int|Integer $start
+     * @param int|Integer|NULL $length
+     *
+     * @return Vector
+     */
+    public function remove(int $start, int $length = null) : Vector
+    {
+        return new Vector($this->_remove($start, $length));
+    }
+
+    /**
+     *  get item from head
+     *
+     * @param mixed &$item
+     *
+     * @return mixed
+     */
+    public function shift(&$item) : Vector
+    {
+        return new Vector($this->_shift($item));
+    }
+
+    /**
+     *  add items from head
+     *
+     * @param mixed $items
+     *
+     * @return Vector
+     */
+    public function unshift(... $items) : Vector
+    {
+        return new Vector($this->_unshiftAll($items));
+    }
+
+    /**
+     *  add items from head
+     *
+     * @param mixed $items
+     *
+     * @return Vector
+     */
+    public function unshiftAll(array $items) : Vector
+    {
+        return new Vector($this->_unshiftAll($items));
+    }
+
+    /**
+     *  Return an array with elements in reverse order
+     *
+     * @return Vector
+     */
+    public function reverse() : Vector
+    {
+        return new Vector($this->_reverse());
+    }
+
+    /**
+     * Apply callback to each elements
+     *
+     * @param callable $callback
+     *
+     * @return Vector
+     */
+    public function map($callback) : Vector
+    {
+        return new Vector($this->_map($callback));
+    }
+
+    /**
+     * Replace with other assoc or HashMap
+     *
+     * @param mixed $from
+     * @param mixed $to
+     *
+     * @return Vector
+     */
+    public function replace($from, $to)
+    {
+        $values = $this->_replace($from, $to);
+        return new Vector($values);
+    }
+
+    /**
+     * Replace with other assoc or HashMap
+     *
+     * @param array $from_to
+     *
+     * @return Vector
+     */
+    public function replaceAll(array $from_to)
+    {
+        $values = $this->_replaceAll($from_to);
+        return new Vector($values);
     }
 
     /**

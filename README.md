@@ -31,13 +31,44 @@ Calgamo/Collection is a generic collection & data structure library.
 
 ## Demo
 
+### Collection
+
+```php
+
+use Calgamo\Collection\Collection;
+
+$col = new Collection(['red', 'green', 'blue']);
+
+echo 'iterate:' . PHP_EOL;
+$output = [];
+foreach($col as $item){
+    $output[] = $item;
+}
+echo ' ' . implode(',', $output) . PHP_EOL;     // red,green,blue
+
+echo 'join:' . PHP_EOL;
+echo ' ' . $col->join() . PHP_EOL;    // red,green,blue
+
+echo 'replace:' . PHP_EOL;
+echo ' ' . $col->replace('green', 'yellow')->join() . PHP_EOL;     // red,yellow,blue
+
+echo 'map:' . PHP_EOL;
+echo ' ' . $col->map(function($item){ return "[$item]"; })->join() . PHP_EOL;      // [red],[green],[blue]
+
+echo 'reduce:' . PHP_EOL;
+echo ' ' . $col->reduce(function($tmp,$item){ return $tmp+strlen($item); }) . PHP_EOL;     // 12
+
+echo 'immutable:' . PHP_EOL;
+echo ' ' . $col->join() . PHP_EOL;       // red,green,blue
+
+```
+
 ### ArrayList
 
 ```php
 
 use Calgamo\Collection\ArrayList;
 
-echo PHP_EOL . '=====[ Exsample1 ]=====' . PHP_EOL;
 $list = new ArrayList(['red', 'green', 'blue']);
 
 echo 'iterate:' . PHP_EOL;
@@ -50,20 +81,17 @@ echo ' ' . implode(',', $output) . PHP_EOL;     // red,green,blue
 echo 'join:' . PHP_EOL;
 echo ' ' . $list->join() . PHP_EOL;    // red,green,blue
 
+echo 'first:' . PHP_EOL;
+echo ' ' . $list->first() . PHP_EOL;    // red
+
+echo 'last:' . PHP_EOL;
+echo ' ' . $list->last() . PHP_EOL;    // blue
+
 echo 'reverse:' . PHP_EOL;
 echo ' ' . $list->reverse()->join() . PHP_EOL;      // blue,green,red
 
-echo 'replace:' . PHP_EOL;
-echo ' ' . $list->replace('green', 'yellow')->join() . PHP_EOL;     // red,yellow,blue
-
 echo 'replace then reverse:' . PHP_EOL;
 echo ' ' . $list->replace('green', 'yellow')->reverse()->join() . PHP_EOL;      // blue,yellow,red
-
-echo 'map:' . PHP_EOL;
-echo ' ' . $list->map(function($item){ return "[$item]"; })->join() . PHP_EOL;      // [red],[green],[blue]
-
-echo 'reduce:' . PHP_EOL;
-echo ' ' . $list->reduce(function($tmp,$item){ return $tmp+strlen($item); }) . PHP_EOL;     // 12
 
 echo 'shift:' . PHP_EOL;
 echo ' ' . $list->shift($item)->join() . PHP_EOL;       // green,blue
@@ -85,7 +113,142 @@ echo ' ' . $list->join() . PHP_EOL;       // red,green,blue
 
 ```
 
-## Usage
+### Vector
+
+```php
+
+use Calgamo\Collection\Vector;
+
+$vec = new Vector(['red', 'green', 'blue']);
+
+echo 'iterate:' . PHP_EOL;
+$output = [];
+foreach($vec as $item){
+    $output[] = $item;
+}
+echo ' ' . implode(',', $output) . PHP_EOL;     // red,green,blue
+
+echo 'join:' . PHP_EOL;
+echo ' ' . $vec->join() . PHP_EOL;    // red,green,blue
+
+echo 'first:' . PHP_EOL;
+echo ' ' . $vec->first() . PHP_EOL;    // red
+
+echo 'last:' . PHP_EOL;
+echo ' ' . $vec->last() . PHP_EOL;    // blue
+
+echo 'reverse:' . PHP_EOL;
+echo ' ' . $vec->reverse()->join() . PHP_EOL;      // blue,green,red
+
+echo 'replace then reverse:' . PHP_EOL;
+echo ' ' . $vec->replace('green', 'yellow')->reverse()->join() . PHP_EOL;      // blue,yellow,red
+
+echo 'shift:' . PHP_EOL;
+echo ' ' . $vec->shift($item)->join() . PHP_EOL;       // green,blue
+
+echo 'unshift:' . PHP_EOL;
+echo ' ' . $vec->unshift('yellow')->join() . PHP_EOL;       // yellow,red,green,blue
+
+echo 'push:' . PHP_EOL;
+echo ' ' . $vec->push('yellow')->join() . PHP_EOL;       // red,green,blue,yellow
+
+echo 'pop:' . PHP_EOL;
+echo ' ' . $vec->pop($item)->join() . PHP_EOL;       // red,green
+
+echo 'sort:' . PHP_EOL;
+echo ' ' . $vec->sort()->join() . PHP_EOL;       // blue,green,red
+
+echo 'immutable:' . PHP_EOL;
+echo ' ' . $vec->join() . PHP_EOL;       // red,green,blue
+
+```
+
+### Stack
+
+```php
+
+use Calgamo\Collection\Stack;
+
+$stack = new Stack(['red', 'green', 'blue']);
+
+echo 'iterate:' . PHP_EOL;
+$output = [];
+foreach($stack as $item){
+    $output[] = $item;
+}
+echo ' ' . implode(',', $output) . PHP_EOL;     // red,green,blue
+
+echo 'join:' . PHP_EOL;
+echo ' ' . $stack->join() . PHP_EOL;    // red,green,blue
+
+echo 'peek:' . PHP_EOL;
+echo ' ' . $stack->peek() . PHP_EOL;    // red
+
+echo 'reverse:' . PHP_EOL;
+echo ' ' . $stack->reverse()->join() . PHP_EOL;      // blue,green,red
+
+echo 'replace then reverse:' . PHP_EOL;
+echo ' ' . $stack->replace('green', 'yellow')->reverse()->join() . PHP_EOL;      // blue,yellow,red
+
+echo 'push:' . PHP_EOL;
+echo ' ' . $stack->push('yellow')->join() . PHP_EOL;       // red,green,blue,yellow
+
+echo 'pop:' . PHP_EOL;
+echo ' ' . $stack->pop($item)->join() . PHP_EOL;       // red,green
+
+echo 'sort:' . PHP_EOL;
+echo ' ' . $stack->sort()->join() . PHP_EOL;       // blue,green,red
+
+echo 'immutable:' . PHP_EOL;
+echo ' ' . $stack->join() . PHP_EOL;       // red,green,blue
+
+```
+
+### HashMap
+
+```php
+
+use Calgamo\Collection\HashMap;
+
+$map = new HashMap(['name' => 'David', 'age' => 21, 'height' => 172.2]);
+
+echo 'iterate:' . PHP_EOL;
+$output = [];
+foreach($map as $item){
+    $output[] = $item;
+}
+echo ' ' . implode(',', $output) . PHP_EOL;     // David,21,172.2
+
+echo 'join:' . PHP_EOL;
+echo ' ' . $map->join() . PHP_EOL;    // David,21,172.2
+
+echo 'immutable:' . PHP_EOL;
+echo ' ' . $map->join() . PHP_EOL;       // David,21,172.2
+
+```
+
+### Set
+
+```php
+
+use Calgamo\Collection\Set;
+
+$set = new Set(['red', 'green', 'blue']);
+
+echo 'iterate:' . PHP_EOL;
+$output = [];
+foreach($set as $item){
+    $output[] = $item;
+}
+echo ' ' . implode(',', $output) . PHP_EOL;     // red,green,blue
+
+echo 'join:' . PHP_EOL;
+echo ' ' . $set->join() . PHP_EOL;    // red,green,blue
+
+echo 'immutable:' . PHP_EOL;
+echo ' ' . $set->join() . PHP_EOL;       // red,green,blue
+
+```
 
 ## Requirement
 

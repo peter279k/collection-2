@@ -48,6 +48,43 @@ trait StackTrait
     }
 
     /**
+     *  Return an array with elements in reverse order
+     *
+     * @return Stack
+     */
+    public function reverse() : Stack
+    {
+        return new Stack($this->_reverse());
+    }
+
+    /**
+     * Replace with other assoc or HashMap
+     *
+     * @param mixed $from
+     * @param mixed $to
+     *
+     * @return Stack
+     */
+    public function replace($from, $to)
+    {
+        $values = $this->_replace($from, $to);
+        return new Stack($values);
+    }
+
+    /**
+     * Replace with other assoc or HashMap
+     *
+     * @param array $from_to
+     *
+     * @return Stack
+     */
+    public function replaceAll(array $from_to)
+    {
+        $values = $this->_replaceAll($from_to);
+        return new Stack($values);
+    }
+
+    /**
      * Sort array data
      *
      * @param callable $callback
