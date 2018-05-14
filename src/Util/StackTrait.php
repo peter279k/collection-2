@@ -3,25 +3,10 @@ namespace Calgamo\Collection\Util;
 
 use Calgamo\Collection\Stack;
 use Calgamo\Collection\Immutable\ImmutableStack;
-use Calgamo\Collection\Exception\StackEmptyException;
 
 trait StackTrait
 {
-    use ArrayListTrait;
-
-    /**
-     * Get array values
-     *
-     * @return mixed
-     */
-    abstract protected function getValues() : array;
-
-    /**
-     * Set array values
-     *
-     * @param array $values
-     */
-    abstract protected function setValues(array $values);
+    use PhpArrayTrait;
 
     /**
      * @return Stack|ImmutableStack
@@ -31,42 +16,59 @@ trait StackTrait
     /**
      * Get the item which is top of the stack
      *
-     * @throws StackEmptyException
+     * @return mixed
      */
     public function peek()
     {
-        $values = $this->getValues();
-        $cnt = count($values);
-        if ( $cnt === 0 ){
-            throw new StackEmptyException($this->getSelf());
-        }
-        return $values[0];
+        return $this->_last();
     }
 
     /**
      * Push item to the top of stack
      *
-     * @param $item
+     * @param mixed $items
+     *
+     * @return Stack
      */
-    public function push($item)
+    public function push(... $items) : Stack
     {
-        $this->add($item);
+        return new Stack($this->_pushAll($items));
     }
 
     /**
      * Pop item from stack
      *
+     * @param mixed &$item
+     *
      * @return mixed
-     * @throws StackEmptyException
      */
-    public function pop()
+    public function pop(&$item) : Stack
     {
-        $values = $this->getValues();
-        if (empty($values)){
-            throw new StackEmptyException($this->getSelf());
-        }
-        $tail = array_pop($values);
-        $this->setValues($values);
-        return $tail;
+        return new Stack($this->_pop($item));
+    }
+
+    /**
+     * Sort array data
+     *
+     * @param callable $callback
+     *
+     * @return Stack
+     */
+    public function sort(callable $callback = null) : Stack
+    {
+        return new Stack($this->_sort($callback));
+    }
+
+    /**
+     * Sort array data by element's field
+     *
+     * @param string $field
+     * @param callable $callback
+     *
+     * @return Stack
+     */
+    public function sortBy(string $field, callable $callback = null) : Stack
+    {
+        return new Stack($this->_sortBy($field, $callback));
     }
 }

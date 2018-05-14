@@ -4,17 +4,9 @@ namespace Calgamo\Collection;
 use Calgamo\Collection\Util\VectorTrait;
 use Calgamo\Collection\Immutable\ImmutableVector;
 
-class Vector extends ArrayList implements \ArrayAccess
+class Vector extends Collection implements \ArrayAccess
 {
     use VectorTrait;
-
-    /**
-     * @return Vector
-     */
-    protected function getSelf()
-    {
-        return $this;
-    }
 
     /**
      * Get immutable collection

@@ -7,66 +7,66 @@ class CollectionTest extends TestCase
     public function testIsEmpty()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertEquals( false, $collection->isEmpty() );
+        $this->assertSame( false, $collection->isEmpty() );
 
         $collection = new Collection([]);
-        $this->assertEquals( true, $collection->isEmpty() );
+        $this->assertSame( true, $collection->isEmpty() );
     }
     public function testSerializeUnserialize()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
 
         $data = $collection->serialize();
-        $this->assertEquals( 'a:3:{i:0;s:5:"apple";i:1;s:6:"banana";i:2;s:4:"kiwi";}', $data );
+        $this->assertSame( 'a:3:{i:0;s:5:"apple";i:1;s:6:"banana";i:2;s:4:"kiwi";}', $data );
 
         $collection->unserialize($data);
-        $this->assertEquals( ['apple', 'banana', 'kiwi'], $collection->toArray() );
+        $this->assertSame( ['apple', 'banana', 'kiwi'], $collection->toArray() );
     }
     public function testCount()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertEquals( 3, $collection->count() );
+        $this->assertSame( 3, $collection->count() );
 
         $collection = new Collection([]);
-        $this->assertEquals( 0, $collection->count() );
+        $this->assertSame( 0, $collection->count() );
     }
     public function testContains()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertEquals( false, $collection->contains(0) );
-        $this->assertEquals( true, $collection->contains(1) );
-        $this->assertEquals( false, $collection->contains(null) );
+        $this->assertSame( false, $collection->contains(0) );
+        $this->assertSame( true, $collection->contains(1) );
+        $this->assertSame( false, $collection->contains(null) );
 
         $collection = new Collection([1, false, 3.4, 1, true]);
-        $this->assertEquals( false, $collection->contains(0) );
-        $this->assertEquals( true, $collection->contains(3.4) );
-        $this->assertEquals( true, $collection->contains(1) );
-        $this->assertEquals( true, $collection->contains(3.4, 1) );
-        $this->assertEquals( false, $collection->contains(3.4, 1, 0) );
-        $this->assertEquals( true, $collection->contains(3.4, 1, true) );
+        $this->assertSame( false, $collection->contains(0) );
+        $this->assertSame( true, $collection->contains(3.4) );
+        $this->assertSame( true, $collection->contains(1) );
+        $this->assertSame( true, $collection->contains(3.4, 1) );
+        $this->assertSame( false, $collection->contains(3.4, 1, 0) );
+        $this->assertSame( true, $collection->contains(3.4, 1, true) );
     }
     public function testContainsAll()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertEquals( false, $collection->containsAll([0]) );
-        $this->assertEquals( true, $collection->containsAll([1]) );
-        $this->assertEquals( false, $collection->containsAll([null]) );
+        $this->assertSame( false, $collection->containsAll([0]) );
+        $this->assertSame( true, $collection->containsAll([1]) );
+        $this->assertSame( false, $collection->containsAll([null]) );
 
         $collection = new Collection([1, false, 3.4, 1, true]);
-        $this->assertEquals( false, $collection->containsAll([0]) );
-        $this->assertEquals( true, $collection->containsAll([3.4]) );
-        $this->assertEquals( true, $collection->containsAll([1]) );
-        $this->assertEquals( true, $collection->containsAll([3.4, 1]) );
-        $this->assertEquals( false, $collection->containsAll([3.4, 1, 0]) );
-        $this->assertEquals( true, $collection->containsAll([3.4, 1, true]) );
-        $this->assertEquals( true, $collection->containsAll(new Collection([3.4, 1, true])) );
+        $this->assertSame( false, $collection->containsAll([0]) );
+        $this->assertSame( true, $collection->containsAll([3.4]) );
+        $this->assertSame( true, $collection->containsAll([1]) );
+        $this->assertSame( true, $collection->containsAll([3.4, 1]) );
+        $this->assertSame( false, $collection->containsAll([3.4, 1, 0]) );
+        $this->assertSame( true, $collection->containsAll([3.4, 1, true]) );
+        $this->assertSame( true, $collection->containsAll(new Collection([3.4, 1, true])) );
     }
     public function testClear()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertEquals( [1, 2, 3], $collection->toArray() );
+        $this->assertSame( [1, 2, 3], $collection->toArray() );
         $collection->clear();
-        $this->assertEquals( [], $collection->toArray() );
+        $this->assertSame( [], $collection->toArray() );
     }
     public function testGetIterator()
     {
@@ -80,48 +80,73 @@ class CollectionTest extends TestCase
             return $item . ' fruits';
         });
         $this->assertInstanceOf(Collection::class, $collection);
-        $this->assertEquals(['apple fruits', 'banana fruits', 'kiwi fruits'], $collection->toArray());
+        $this->assertSame(['apple fruits', 'banana fruits', 'kiwi fruits'], $collection->toArray());
 
         $collection = new Collection(['apple', 'banana', 'kiwi']);
         $collection = $collection->map(function ($item){
             return strlen($item);
         });
         $this->assertInstanceOf(Collection::class, $collection);
-        $this->assertEquals([5, 6, 4], $collection->toArray());
+        $this->assertSame([5, 6, 4], $collection->toArray());
+    }
+    public function testReduce()
+    {
+        $collection = new Collection(['apple', 'banana', 'kiwi']);
+        $result = $collection->reduce(function ($carry, $item){
+            return $carry . '/' . $item;
+        });
+        $this->assertSame('/apple/banana/kiwi', $result);
+
+        $collection = new Collection(['apple', 'banana', 'kiwi']);
+        $result = $collection->reduce(function ($carry, $item){
+            return $carry + strlen($item);
+        });
+        $this->assertSame(15, $result);
     }
     public function testReplace()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $collection->replace('apple', 'mango');
-        $this->assertEquals(['mango', 'banana', 'kiwi'], $collection->toArray());
+        $ret = $collection->replace('apple', 'mango');
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
+        $this->assertSame(['mango', 'banana', 'kiwi'], $ret->toArray());
+        $this->assertInstanceOf(Collection::class, $ret);
 
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $collection->replace('banana', 'orange');
-        $this->assertEquals(['apple', 'orange', 'kiwi'], $collection->toArray());
+        $ret = $collection->replace('banana', 'orange');
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
+        $this->assertSame(['apple', 'orange', 'kiwi'], $ret->toArray());
+        $this->assertInstanceOf(Collection::class, $ret);
     }
     public function testReplaceAll()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $collection->replaceAll(['apple' => 'mango', 'banana' => 'orange']);
-        $this->assertEquals(['mango', 'orange', 'kiwi'], $collection->toArray());
+        $replace = ['apple' => 'mango', 'banana' => 'orange'];
+        $ret = $collection->replaceAll($replace);
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
+        $this->assertSame(['mango', 'orange', 'kiwi'], $ret->toArray());
+        $this->assertInstanceOf(Collection::class, $ret);
     }
     public function testJoin()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $this->assertEquals('apple,banana,kiwi', $collection->join());
+        $this->assertSame('apple,banana,kiwi', $collection->join());
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
 
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $this->assertEquals('apple or banana or kiwi', $collection->join(' or '));
+        $this->assertSame('apple or banana or kiwi', $collection->join(' or '));
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
     }
     public function testToArray()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $this->assertEquals(['apple', 'banana', 'kiwi'], $collection->toArray());
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
     }
     public function testToString()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
-        $this->assertEquals('Calgamo\Collection\Collection values:["apple","banana","kiwi"]', $collection->__toString());
+        $this->assertSame('Calgamo\Collection\Collection values:["apple","banana","kiwi"]', $collection->__toString());
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());     // immutable
     }
     
 }

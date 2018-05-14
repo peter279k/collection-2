@@ -4,30 +4,10 @@ namespace Calgamo\Collection\Util;
 use Calgamo\Util\EqualableInterface;
 
 use Calgamo\Collection\Vector;
-use Calgamo\Collection\Immutable\ImmutableVector;
 
 trait VectorTrait
 {
-    use ArrayListTrait;
-
-    /**
-     * Get array values
-     *
-     * @return mixed
-     */
-    abstract protected function getValues() : array;
-
-    /**
-     * Set array values
-     *
-     * @param array $values
-     */
-    abstract protected function setValues(array $values);
-
-    /**
-     * @return Vector|ImmutableVector
-     */
-    abstract protected function getSelf();
+    use PhpArrayTrait;
 
     /**
      *  Return an array with elements in reverse order
@@ -36,7 +16,7 @@ trait VectorTrait
      */
     public function reverse()
     {
-        return new Vector(array_reverse($this->getValues()));
+        return new Vector($this->_reverse());
     }
 
     /**
@@ -46,10 +26,9 @@ trait VectorTrait
      *
      * @return mixed
      */
-    public function getAt(int $index)
+    public function get(int $index)
     {
-        $values = $this->getValues();
-        return $values[$index] ?? NULL;
+        return $this->_get($index, true);
     }
 
     /**
@@ -57,12 +36,12 @@ trait VectorTrait
      *
      * @param int $index
      * @param mixed $value
+     *
+     * @return Vector
      */
-    public function setAt($index, $value)
+    public function set($index, $value) : Vector
     {
-        $values = $this->getValues();
-        $values[$index] = $value;
-        $this->setValues($values);
+        return new Vector($this->_set($index, $value, true));
     }
 
     /**
@@ -72,8 +51,7 @@ trait VectorTrait
      */
     public function offsetGet($offset)
     {
-        $values = $this->getValues();
-        return $values[$offset] ?? NULL;
+        return $this->_get($offset, true);
     }
 
     /**
@@ -82,8 +60,7 @@ trait VectorTrait
      */
     public function offsetSet($offset, $value)
     {
-        $values = $this->getValues();
-        $values[$offset] = $value;
+        $values = $this->_set($offset, $value, true);
         $this->setValues($values);
     }
 
@@ -94,8 +71,7 @@ trait VectorTrait
      */
     public function offsetExists($offset)
     {
-        $values = $this->getValues();
-        return isset($values[$offset]);
+        return $this->_isset($offset, true);
     }
 
     /**
@@ -103,9 +79,7 @@ trait VectorTrait
      */
     public function offsetUnset($offset)
     {
-        $values = $this->getValues();
-        unset($values[$offset]);
-        $this->setValues($values);
+        $this->_unset($offset, true);
     }
 
     /**
@@ -137,4 +111,42 @@ trait VectorTrait
 
         return FALSE;
     }
+
+    /**
+     * Merge with array data
+     *
+     * @param $data
+     *
+     * @return Vector
+     */
+    public function merge(array $data) : Vector
+    {
+        return new Vector($this->_merge($data));
+    }
+
+    /**
+     * Sort array data
+     *
+     * @param callable $callback
+     *
+     * @return Vector
+     */
+    public function sort(callable $callback = null) : Vector
+    {
+        return new Vector($this->_sort($callback));
+    }
+
+    /**
+     * Sort array data by element's field
+     *
+     * @param string $field
+     * @param callable $callback
+     *
+     * @return Vector
+     */
+    public function sortBy(string $field, callable $callback = null) : Vector
+    {
+        return new Vector($this->_sortBy($field, $callback));
+    }
+
 }

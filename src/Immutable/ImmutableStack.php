@@ -4,7 +4,7 @@ namespace Calgamo\Collection\Immutable;
 use Calgamo\Collection\Util\StackTrait;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
-class ImmutableStack extends ImmutableArrayList
+class ImmutableStack extends ImmutableCollection
 {
     use StackTrait;
 

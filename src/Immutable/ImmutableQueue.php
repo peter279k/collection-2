@@ -4,7 +4,7 @@ namespace Calgamo\Collection\Immutable;
 use Calgamo\Collection\Util\QueueTrait;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
-class ImmutableQueue extends ImmutableArrayList
+class ImmutableQueue extends ImmutableCollection
 {
     use QueueTrait;
 

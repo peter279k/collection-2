@@ -56,25 +56,12 @@ class ImmutableCollection implements \Countable, \IteratorAggregate, \Serializab
     /**
      * Replace with other assoc or HashMap
      *
-     * @param array $replace
-     * @param bool $recursive
+     * @param mixed $from
+     * @param mixed $to
      *
      * @throws ImmutableObjectException
      */
-    public function replace(/** @noinspection PhpUnusedParameterInspection */array $replace, bool $recursive = false)
-    {
-        throw new ImmutableObjectException($this);
-    }
-
-    /**
-     * Merge with other assoc or HashMap
-     *
-     * @param array $merge
-     * @param bool $recursive
-     *
-     * @throws ImmutableObjectException
-     */
-    public function merge(/** @noinspection PhpUnusedParameterInspection */array $merge, $recursive = false)
+    public function replace(/** @noinspection PhpUnusedParameterInspection */$from, $to)
     {
         throw new ImmutableObjectException($this);
     }

@@ -13,7 +13,7 @@ trait PropertyTrait
      *
      * @return mixed
      */
-    public function getRaw( string $key )
+    public function get( string $key )
     {
         return $this->getPropertyNodeValue( $key );
     }
@@ -37,18 +37,7 @@ trait PropertyTrait
 
         return strval($value);
     }
-    
-    /**
-     * Set as string value
-     *
-     * @param string $key
-     * @param string $value
-     */
-    public function setString(string $key, string $value)
-    {
-        $this->setPropertyNodeValue($key, $value);
-    }
-    
+
     /**
      * Get as list value
      *
@@ -68,18 +57,7 @@ trait PropertyTrait
 
         return new ArrayList($value);
     }
-    
-    /**
-     * Set as list value
-     *
-     * @param string $key
-     * @param array|ArrayList $value
-     */
-    public function setList(string $key, $value)
-    {
-        $this->setPropertyNodeValue($key, $value);
-    }
-    
+
     /**
      * Get as associative array value
      *
@@ -99,18 +77,7 @@ trait PropertyTrait
 
         return new HashMap($value);
     }
-    
-    /**
-     * Set as associative array value
-     *
-     * @param string $key
-     * @param array|HashMap $value
-     */
-    public function setHashMap(string $key, $value)
-    {
-        $this->setPropertyNodeValue($key, $value);
-    }
-    
+
     /**
      * Get as int value
      *
@@ -130,18 +97,7 @@ trait PropertyTrait
 
         return intval($value);
     }
-    
-    /**
-     * Set as int value
-     *
-     * @param string $key
-     * @param int $value
-     */
-    public function setInteger(string $key, int $value)
-    {
-        $this->setPropertyNodeValue($key, $value);
-    }
-    
+
     /**
      * Get as float value
      *
@@ -161,18 +117,7 @@ trait PropertyTrait
 
         return floatval($value);
     }
-    
-    /**
-     * Set as float value
-     *
-     * @param string $key
-     * @param float $value
-     */
-    public function setFloat(string $key, float $value)
-    {
-        $this->setPropertyNodeValue($key, $value);
-    }
-    
+
     /**
      * Get as bool value
      *
@@ -192,18 +137,7 @@ trait PropertyTrait
 
         return boolval($value);
     }
-    
-    /**
-     * Set as bool value
-     *
-     * @param string $key
-     * @param bool $value
-     */
-    public function setBoolean(string $key, bool $value)
-    {
-        $this->setPropertyNodeValue($key, $value);
-    }
-    
+
     /**
      * Get property node
      *
@@ -226,37 +160,6 @@ trait PropertyTrait
             $node = $node[$node_key];
         }
         return $node[$node_key] ?? NULL;
-    }
-    
-    /**
-     * Get property node
-     *
-     * @param string $key
-     * @param mixed $value
-     */
-    private function setPropertyNodeValue(string $key, $value)
-    {
-        $data = $this->getValues();
-        if (strpos($key,'/')===false){
-            $data[$key] = $value;
-            $this->setValues($data);
-            return;
-        }
-        $node_keys = explode('/', $key);
-        $child_array = NULL;
-        $new_array = NULL;
-        while($node_key = array_pop($node_keys)){
-            $new_array = [];
-            if (!$child_array){
-                $new_array[$node_key] = $value;
-            }
-            else{
-                $new_array[$node_key] = $child_array;
-            }
-            $child_array = $new_array;
-        }
-        $new_data = array_replace_recursive($data, $new_array);
-        $this->setValues($new_data);
     }
 }
 

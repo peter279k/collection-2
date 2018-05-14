@@ -5,36 +5,18 @@ use Calgamo\Collection\ArrayList;
 
 trait ArrayListTrait
 {
-    /**
-     * Get array values
-     *
-     * @return mixed
-     */
-    abstract protected function getValues() : array;
-
-    /**
-     * Set array values
-     *
-     * @param array $values
-     */
-    abstract protected function setValues(array $values);
+    use PhpArrayTrait;
 
     /**
      *  Add element to tail
      *
      * @param mixed $items
      *
-     * @return int
+     * @return ArrayList
      */
-    public function add(... $items) : int
+    public function push(... $items) : ArrayList
     {
-        $values = $this->getValues();
-        foreach($items as $item)
-        {
-            array_push($values , $item);
-        }
-        $this->setValues($values);
-        return count($values);
+        return new ArrayList($this->_pushAll($items));
     }
 
     /**
@@ -42,70 +24,35 @@ trait ArrayListTrait
      *
      *  @param array $items
      *
-     * @return int
+     * @return ArrayList
      */
-    public function addAll(array $items) : int
+    public function pushAll(array $items) : ArrayList
     {
-        $values = $this->getValues();
-        $values = array_merge($values , $items);
-        $this->setValues($values);
-        return count($values);
+        return new ArrayList($this->_pushAll($items));
     }
 
     /**
      * Get head element of the array
      *
+     * @param callable $callback
+     *
      * @return mixed
      */
-    public function getHead()
+    public function first(callable $callback = null)
     {
-        $values = $this->getValues();
-        $cnt = count($values);
-        if ( $cnt > 0 ){
-            return $values[0];
-        }
-        return NULL;
+        return $this->_first($callback);
     }
 
     /**
      * Get tail element of the array
      *
-     * @return mixed
-     */
-    public function getTail()
-    {
-        $values = $this->getValues();
-        $cnt = count($values);
-        if ( $cnt > 0 ){
-            return $values[$cnt - 1];
-        }
-        return NULL;
-    }
-
-    /**
-     *  Remove head element of the array
+     * @param callable $callback
      *
      * @return mixed
      */
-    public function removeHead()
+    public function last(callable $callback = null)
     {
-        $values = $this->getValues();
-        $ret = array_shift($values);
-        $this->setValues($values);
-        return $ret;
-    }
-
-    /**
-     *  Remove tail element of the array
-     *
-     * @return mixed
-     */
-    public function removeTail()
-    {
-        $values = $this->getValues();
-        $ret = array_pop($values);
-        $this->setValues($values);
-        return $ret;
+        return $this->_last($callback);
     }
 
     /**
@@ -113,54 +60,24 @@ trait ArrayListTrait
      *
      * @param int|Integer $start
      * @param int|Integer|NULL $length
-     */
-    public function remove(int $start, int $length = null)
-    {
-        $values = $this->getValues();
-        if ($length){
-            array_splice($values, $start, $length);
-        }
-        else{
-            array_splice($values, $start);
-        }
-        $this->setValues($values);
-    }
-
-    /**
-     * remove element by index
      *
-     * @param int|Integer $index
+     * @return ArrayList
      */
-    public function removeAt(int $index)
+    public function remove(int $start, int $length = null) : ArrayList
     {
-        $values = $this->getValues();
-        if (isset($values[$index])){
-            unset($values[$index]);
-            $this->setValues(array_values($values));
-        }
+        return new ArrayList($this->_remove($start, $length));
     }
 
     /**
      *  get item from head
      *
-     * @param int $count
+     * @param mixed &$item
      *
-     * @return array
+     * @return mixed
      */
-    public function shift(int $count = 1) : array
+    public function shift(&$item) : ArrayList
     {
-        $ret = [];
-        while(--$count >= 0)
-        {
-            $values = $this->getValues();
-            if (empty($values)) {
-                return $ret;
-            }
-            $item = array_shift($values);
-            $this->setValues($values);
-            $ret[] = $item;
-        }
-        return $ret;
+        return new ArrayList($this->_shift($item));
     }
 
     /**
@@ -168,17 +85,11 @@ trait ArrayListTrait
      *
      * @param mixed $items
      *
-     * @return int
+     * @return ArrayList
      */
-    public function unshift(... $items) : int
+    public function unshift(... $items) : ArrayList
     {
-        $values = $this->getValues();
-        foreach($items as $item)
-        {
-            array_unshift($values, $item);
-        }
-        $this->setValues($values);
-        return count($values);
+        return new ArrayList($this->_unshiftAll($items));
     }
 
     /**
@@ -186,17 +97,11 @@ trait ArrayListTrait
      *
      * @param mixed $items
      *
-     * @return int
+     * @return ArrayList
      */
-    public function unshiftAll(array $items) : int
+    public function unshiftAll(array $items) : ArrayList
     {
-        $values = $this->getValues();
-        foreach($items as $item)
-        {
-            array_unshift($values, $item);
-        }
-        $this->setValues($values);
-        return count($values);
+        return new ArrayList($this->_unshiftAll($items));
     }
 
     /**
@@ -204,9 +109,9 @@ trait ArrayListTrait
      *
      * @return ArrayList
      */
-    public function reverse()
+    public function reverse() : ArrayList
     {
-        return new ArrayList( array_reverse($this->getValues()) );
+        return new ArrayList($this->_reverse());
     }
 
     /**
@@ -216,9 +121,59 @@ trait ArrayListTrait
      *
      * @return ArrayList
      */
-    public function map($callback)
+    public function map($callback) : ArrayList
     {
-        $values = array_map($callback, $this->getValues());
-        return new ArrayList($values);
+        return new ArrayList($this->_map($callback));
     }
+
+    /**
+     * Replace with other assoc or HashMap
+     *
+     * @param mixed $from
+     * @param mixed $to
+     *
+     * @return ArrayList
+     */
+    public function replace($from, $to) : ArrayList
+    {
+        return new ArrayList($this->_replace($from, $to));
+    }
+
+    /**
+     * Replace with other assoc or HashMap
+     *
+     * @param array $from_to
+     *
+     * @return ArrayList
+     */
+    public function replaceAll(array $from_to) : ArrayList
+    {
+        return new ArrayList($this->_replaceAll($from_to));
+    }
+
+    /**
+     * Sort array data
+     *
+     * @param callable $callback
+     *
+     * @return ArrayList
+     */
+    public function sort(callable $callback = null) : ArrayList
+    {
+        return new ArrayList($this->_sort($callback));
+    }
+
+    /**
+     * Sort array data by element's field
+     *
+     * @param string $field
+     * @param callable $callback
+     *
+     * @return ArrayList
+     */
+    public function sortBy(string $field, callable $callback = null) : ArrayList
+    {
+        return new ArrayList($this->_sortBy($field, $callback));
+    }
+
 }

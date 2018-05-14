@@ -4,7 +4,7 @@ namespace Calgamo\Collection\Immutable;
 use Calgamo\Collection\Util\VectorTrait;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
-class ImmutableVector extends ImmutableArrayList
+class ImmutableVector extends ImmutableCollection
 {
     use VectorTrait;
 

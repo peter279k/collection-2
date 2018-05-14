@@ -4,7 +4,7 @@ namespace Calgamo\Collection;
 use Calgamo\Collection\Util\StackTrait;
 use Calgamo\Collection\Immutable\ImmutableStack;
 
-class Stack extends Vector
+class Stack extends Collection
 {
     use StackTrait;
 

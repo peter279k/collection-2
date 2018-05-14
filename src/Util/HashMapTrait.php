@@ -1,28 +1,26 @@
 <?php
 namespace Calgamo\Collection\Util;
 
+use Calgamo\Collection\HashMap;
+
 trait HashMapTrait
 {
-    /**
-     * Get array values
-     *
-     * @return mixed
-     */
-    abstract protected function getValues() : array;
-
-    /**
-     * Set array values
-     *
-     * @param array $values
-     */
-    abstract protected function setValues(array $values);
+    use PhpArrayTrait;
 
     /**
      * get list of keys
      */
     public function keys() : array
     {
-        return array_keys($this->getValues());
+        return $this->_keys();
+    }
+
+    /**
+     * get list of values
+     */
+    public function values() : array
+    {
+        return $this->_values();
     }
 
     /**
@@ -32,9 +30,9 @@ trait HashMapTrait
      *
      * @return bool
      */
-    public function keyExists($key)
+    public function hasKey($key) : bool
     {
-        return array_key_exists($key, $this->getValues());
+        return $this->_isset($key, false);
     }
 
     /**
@@ -46,7 +44,7 @@ trait HashMapTrait
      */
     public function get($key)
     {
-        return $this->offsetGet( $key );
+        return $this->_get($key, false);
     }
 
     /**
@@ -54,61 +52,51 @@ trait HashMapTrait
      *
      * @param mixed $key
      * @param mixed $value
+     *
+     * @return HashMap
      */
-    public function set($key, $value)
+    public function set($key, $value) : HashMap
     {
-        $this->offsetSet($key, $value);
+        return new HashMap($this->_set($key, $value, false));
     }
 
     /**
-     * ArrayAccess interface : offsetGet() implementation
+     * @param $offset
      *
-     * @param mixed $offset
-     *
-     * @return mixed|NULL
+     * @return null
      */
     public function offsetGet($offset)
     {
-        $values = $this->getValues();
-        return $values[$offset] ?? NULL;
+        return $this->_get($offset, false);
     }
 
     /**
-     * ArrayAccess interface : offsetSet() implementation
-     *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param $offset
+     * @param $value
      */
     public function offsetSet($offset, $value)
     {
-        $values = $this->getValues();
-        $values[$offset] = $value;
+        $values = $this->_set($offset, $value, false);
         $this->setValues($values);
     }
 
     /**
-     * ArrayAccess interface : offsetExists() implementation
-     *
-     * @param mixed $offset
+     * @param $offset
      *
      * @return bool
      */
     public function offsetExists($offset)
     {
-        $values = $this->getValues();
-        return isset($values[$offset]);
+        return $this->_isset($offset, false);
     }
 
     /**
-     * ArrayAccess interface : offsetUnset() implementation
-     *
-     * @param mixed $offset
+     * @param $offset
      */
     public function offsetUnset($offset)
     {
-        $values = $this->getValues();
-        unset($values[$offset]);
-        $this->setValues($values);
+        $this->_unset($offset, false);
     }
+
 
 }

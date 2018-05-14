@@ -30,6 +30,7 @@
                 <directory>./sample</directory>
                 <directory>./vendor</directory>
                 <directory suffix="Interface.php">./src</directory>
+                <directory suffix="Exception.php">./src</directory>
             </exclude>
         </whitelist>
     </filter>

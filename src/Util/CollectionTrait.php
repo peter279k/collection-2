@@ -1,25 +1,11 @@
 <?php
 namespace Calgamo\Collection\Util;
 
-use Calgamo\Util\Util;
-
 use Calgamo\Collection\Collection;
 
 trait CollectionTrait
 {
-    /**
-     * Get array values
-     *
-     * @return mixed
-     */
-    abstract protected function getValues() : array;
-
-    /**
-     * Set array values
-     *
-     * @param array $values
-     */
-    abstract protected function setValues(array $values);
+    use PhpArrayTrait;
 
     /**
      * Serialize
@@ -120,14 +106,27 @@ trait CollectionTrait
     /**
      * Applies a callback to all elements
      *
-     * @param callable $callable
+     * @param callable $callback
      *
      * @return Collection
      */
-    public function map($callable)
+    public function map($callback)
     {
-        $values = array_map($callable, $this->getValues());
+        $values = $this->_map($callback);
         return new Collection($values);
+    }
+
+    /**
+     * Iteratively reduce the array to a single value using a callback function
+     *
+     * @param callable $callback
+     * @param mixed $initial
+     *
+     * @return mixed
+     */
+    public function reduce($callback, $initial = null)
+    {
+        return $this->_reduce($callback, $initial);
     }
 
     /**
@@ -135,36 +134,26 @@ trait CollectionTrait
      *
      * @param mixed $from
      * @param mixed $to
+     *
+     * @return Collection
      */
     public function replace($from, $to)
     {
-        $values = $this->getValues();
-        foreach($values as $key => $value)
-        {
-            if ($value === $from)
-            {
-                $values[$key] = $to;
-            }
-        }
-        $this->setValues($values);
+        $values = $this->_replace($from, $to);
+        return new Collection($values);
     }
 
     /**
      * Replace with other assoc or HashMap
      *
      * @param array $from_to
+     *
+     * @return Collection
      */
     public function replaceAll(array $from_to)
     {
-        $values = $this->getValues();
-        foreach($values as $key => $value)
-        {
-            if (isset($from_to[$value]))
-            {
-                $values[$key] = $from_to[$value];
-            }
-        }
-        $this->setValues($values);
+        $values = $this->_replaceAll($from_to);
+        return new Collection($values);
     }
 
     /**
@@ -174,7 +163,7 @@ trait CollectionTrait
      *
      * @return string
      */
-    public function join(string $delimiter = ',')
+    public function join(string $delimiter = ',') : string
     {
         return implode($delimiter, $this->getValues());
     }

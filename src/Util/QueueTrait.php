@@ -1,41 +1,58 @@
 <?php
 namespace Calgamo\Collection\Util;
 
+use Calgamo\Collection\Queue;
+
 trait QueueTrait
 {
-    use ArrayListTrait;
-
-    /**
-     * Get array values
-     *
-     * @return mixed
-     */
-    abstract protected function getValues() : array;
-
-    /**
-     * Set array values
-     *
-     * @param array $values
-     */
-    abstract protected function setValues(array $values);
+    use PhpArrayTrait;
 
     /**
      * Take item from the queue
      *
-     * @return mixed
+     * @param mixed &$item
+     *
+     * @return Queue
      */
-    public function dequeue()
+    public function dequeue(&$item) : Queue
     {
-        return $this->shift();
+        return new Queue($this->_shift($item));
     }
 
     /**
      * Add item to the queue
      *
-     * @param mixed $item
+     * @param mixed $items
+     *
+     * @return Queue
      */
-    public function enqueue( $item )
+    public function enqueue(... $items) : Queue
     {
-        $this->add( $item );
+        return new Queue($this->_pushAll($items));
+    }
+
+    /**
+     * Sort array data
+     *
+     * @param callable $callback
+     *
+     * @return Queue
+     */
+    public function sort(callable $callback = null) : Queue
+    {
+        return new Queue($this->_sort($callback));
+    }
+
+    /**
+     * Sort array data by element's field
+     *
+     * @param string $field
+     * @param callable $callback
+     *
+     * @return Queue
+     */
+    public function sortBy(string $field, callable $callback = null) : Queue
+    {
+        return new Queue($this->_sortBy($field, $callback));
     }
 }
