@@ -45,3 +45,6 @@ echo ' ' . $list->pop($item)->join() . PHP_EOL;       // red,green
 
 echo 'sort:' . PHP_EOL;
 echo ' ' . $list->sort()->join() . PHP_EOL;       // blue,green,red
+
+echo 'immutable:' . PHP_EOL;
+echo ' ' . $list->join() . PHP_EOL;       // red,green,blue
