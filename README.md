@@ -10,7 +10,7 @@ A generic collection & data structure library.
 
 ## Description
 
-Calgamo/Collection is a collection library for calgamo framework.
+Calgamo/Collection is a generic collection & data structure library.
 
 
 ## Feature
