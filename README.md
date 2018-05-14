@@ -1,4 +1,4 @@
-Calgamo/Collection, Collection library for Calgamo Framework.
+Calgamo/Collection, A Generic collection & data structure library for PHP7 or later.
 =======================
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/calgamo/collection.svg?style=flat-square)](https://packagist.org/packages/calgamo/collection)
