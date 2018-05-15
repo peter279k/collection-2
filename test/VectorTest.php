@@ -125,6 +125,18 @@ class VectorTest extends TestCase
         $this->assertSame(['apple'], $ret->toArray());
         $this->assertInstanceOf(Vector::class, $ret);
         $this->assertSame('banana', $item);
+
+        $ret = $vec->pop($item);
+        $this->assertSame([], $vec->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(Vector::class, $ret);
+        $this->assertSame('apple', $item);
+
+        $ret = $vec->pop($item);
+        $this->assertSame([], $vec->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(Vector::class, $ret);
+        $this->assertSame(null, $item);
     }
     public function testFirst()
     {
@@ -180,6 +192,18 @@ class VectorTest extends TestCase
         $this->assertSame(['kiwi'], $ret->toArray());
         $this->assertInstanceOf(Vector::class, $ret);
         $this->assertSame('banana', $item);
+
+        $ret = $vec->shift($item);
+        $this->assertSame([], $vec->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(Vector::class, $ret);
+        $this->assertSame('kiwi', $item);
+
+        $ret = $vec->shift($item);
+        $this->assertSame([], $vec->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(Vector::class, $ret);
+        $this->assertSame(null, $item);
     }
     public function testUnshift()
     {

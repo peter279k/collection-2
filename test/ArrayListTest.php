@@ -59,6 +59,18 @@ class ArrayListTest extends TestCase
         $this->assertSame(['apple'], $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
         $this->assertSame('banana', $item);
+
+        $ret = $list->pop($item);
+        $this->assertSame([], $list->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(ArrayList::class, $ret);
+        $this->assertSame('apple', $item);
+
+        $ret = $list->pop($item);
+        $this->assertSame([], $list->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(ArrayList::class, $ret);
+        $this->assertSame(null, $item);
     }
     public function testFirst()
     {
@@ -114,6 +126,18 @@ class ArrayListTest extends TestCase
         $this->assertSame(['kiwi'], $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
         $this->assertSame('banana', $item);
+
+        $ret = $list->shift($item);
+        $this->assertSame([], $list->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(ArrayList::class, $ret);
+        $this->assertSame('kiwi', $item);
+
+        $ret = $list->shift($item);
+        $this->assertSame([], $list->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(ArrayList::class, $ret);
+        $this->assertSame(null, $item);
     }
     public function testUnshift()
     {

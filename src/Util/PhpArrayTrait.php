@@ -216,7 +216,8 @@ trait PhpArrayTrait
     {
         $values = $this->getValues();
         if (empty($values)) {
-            return null;
+            $item = null;
+            return $values;
         }
         $item = array_pop($values);
         return $values;
@@ -233,7 +234,8 @@ trait PhpArrayTrait
     {
         $values = $this->getValues();
         if (empty($values)) {
-            return null;
+            $item = null;
+            return $values;
         }
         $item = array_shift($values);
         return $values;

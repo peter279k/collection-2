@@ -45,6 +45,18 @@ class StackTest extends TestCase
         $this->assertSame(['apple'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
         $this->assertSame('banana', $item);
+
+        $ret = $stack->pop($item);
+        $this->assertSame([], $stack->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
+        $this->assertSame('apple', $item);
+
+        $ret = $stack->pop($item);
+        $this->assertSame([], $stack->toArray());
+        $this->assertSame([], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
+        $this->assertSame(null, $item);
     }
     public function testPeek()
     {
