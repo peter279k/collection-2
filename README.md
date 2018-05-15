@@ -33,9 +33,6 @@ Calgamo/Collection is a generic collection & data structure library.
 ### Collection
 
 ```php
-
-use Calgamo\Collection\Collection;
-
 $data = ['red', 'green', 'blue'];
 
 echo 'iterate:' . PHP_EOL;
@@ -62,9 +59,6 @@ echo ' ' . (new Collection($data))->reduce(function($tmp,$item){ return $tmp+str
 ### ArrayList
 
 ```php
-
-use Calgamo\Collection\ArrayList;
-
 $data = ['red', 'green', 'blue'];
 
 echo 'iterate:' . PHP_EOL;
@@ -109,9 +103,6 @@ echo ' ' . (new ArrayList($data))->sort()->join() . PHP_EOL;       // blue,green
 ### Vector
 
 ```php
-
-use Calgamo\Collection\Vector;
-
 $data = ['red', 'green', 'blue'];
 
 echo 'iterate:' . PHP_EOL;
@@ -156,9 +147,6 @@ echo ' ' . (new Vector($data))->sort()->join() . PHP_EOL;       // blue,green,re
 ### Stack
 
 ```php
-
-use Calgamo\Collection\Stack;
-
 $data = ['red', 'green', 'blue'];
 
 echo 'iterate:' . PHP_EOL;
@@ -194,9 +182,6 @@ echo ' ' . (new Stack($data))->sort()->join() . PHP_EOL;       // blue,green,red
 ### HashMap
 
 ```php
-
-use Calgamo\Collection\HashMap;
-
 $data = ['name' => 'David', 'age' => 21, 'height' => 172.2];
 
 echo 'iterate:' . PHP_EOL;
@@ -214,9 +199,6 @@ echo ' ' . (new HashMap($data))->join() . PHP_EOL;    // David,21,172.2
 ### Set
 
 ```php
-
-use Calgamo\Collection\Set;
-
 $data = ['red', 'green', 'blue'];
 
 echo 'iterate:' . PHP_EOL;
