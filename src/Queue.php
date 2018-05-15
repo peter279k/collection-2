@@ -27,7 +27,9 @@ class Queue extends Collection
      */
     public function dequeue(&$item) : Queue
     {
-        return new Queue($this->_shift($item));
+        $values = $this->_shift($item);
+        $this->setValues($values);
+        return $this;
     }
 
     /**
@@ -39,7 +41,9 @@ class Queue extends Collection
      */
     public function enqueue(... $items) : Queue
     {
-        return new Queue($this->_pushAll($items));
+        $values = $this->_pushAll($items);
+        $this->setValues($values);
+        return $this;
     }
 
     /**
@@ -51,7 +55,9 @@ class Queue extends Collection
      */
     public function sort(callable $callback = null) : Queue
     {
-        return new Queue($this->_sort($callback));
+        $values = $this->_sort($callback);
+        $this->setValues($values);
+        return $this;
     }
 
     /**
@@ -64,7 +70,9 @@ class Queue extends Collection
      */
     public function sortBy(string $field, callable $callback = null) : Queue
     {
-        return new Queue($this->_sortBy($field, $callback));
+        $values = $this->_sortBy($field, $callback);
+        $this->setValues($values);
+        return $this;
     }
 }
 
