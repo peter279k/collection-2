@@ -2,11 +2,11 @@
 namespace Calgamo\Collection\Immutable;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
-use Calgamo\Collection\Util\ArrayListTrait;
+use Calgamo\Collection\Util\PhpArrayTrait;
 
 class ImmutableArrayList extends ImmutableCollection
 {
-    use ArrayListTrait;
+    use PhpArrayTrait;
 
     /**
      *  Add element to tail

@@ -65,8 +65,9 @@ class CollectionTest extends TestCase
     {
         $collection = new Collection([1, 2, 3]);
         $this->assertSame( [1, 2, 3], $collection->toArray() );
-        $collection->clear();
+        $ret = $collection->empty();
         $this->assertSame( [], $collection->toArray() );
+        $this->assertSame( [], $ret->toArray() );
     }
     public function testGetIterator()
     {

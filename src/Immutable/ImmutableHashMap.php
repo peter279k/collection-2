@@ -1,24 +1,61 @@
 <?php
 namespace Calgamo\Collection\Immutable;
 
-use Calgamo\Collection\Util\HashMapTrait;
+use Calgamo\Collection\Util\PhpArrayTrait;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
 class ImmutableHashMap extends ImmutableCollection implements \ArrayAccess, \IteratorAggregate
 {
-    use HashMapTrait;
+    use PhpArrayTrait;
 
     /**
-     * Set an element value
+     * get list of keys
+     */
+    public function keys() : array
+    {
+        return $this->_keys();
+    }
+
+    /**
+     * get list of values
+     */
+    public function values() : array
+    {
+        return $this->_values();
+    }
+
+    /**
+     *  check if specified key is in the list
      *
      * @param mixed $key
-     * @param mixed $value
-     * 
-     * @throws ImmutableObjectException
+     *
+     * @return bool
      */
-    public function __set( $key, $value )
+    public function hasKey($key) : bool
     {
-        throw new ImmutableObjectException($this);
+        return $this->_isset($key, false);
+    }
+
+    /**
+     * Get an element value
+     *
+     * @param mixed $key
+     *
+     * @return mixed|NULL
+     */
+    public function get($key)
+    {
+        return $this->_get($key, false);
+    }
+
+    /**
+     * @param $offset
+     *
+     * @return null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->_get($offset, false);
     }
 
     /**
@@ -32,6 +69,16 @@ class ImmutableHashMap extends ImmutableCollection implements \ArrayAccess, \Ite
     public function offsetSet($offset, $value)
     {
         throw new ImmutableObjectException($this);
+    }
+
+    /**
+     * @param $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->_isset($offset, false);
     }
 
     /**

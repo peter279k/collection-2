@@ -1,12 +1,12 @@
 <?php
 namespace Calgamo\Collection\Immutable;
 
-use Calgamo\Collection\Util\VectorTrait;
+use Calgamo\Collection\Util\PhpArrayTrait;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
 class ImmutableVector extends ImmutableCollection
 {
-    use VectorTrait;
+    use PhpArrayTrait;
 
     /**
      * @return ImmutableVector
@@ -17,16 +17,25 @@ class ImmutableVector extends ImmutableCollection
     }
 
     /**
-     *  Set element value
+     *  Get element value
      *
      * @param int $index
-     * @param mixed $value
      *
-     * @throws ImmutableObjectException
+     * @return mixed
      */
-    public function set(/** @noinspection PhpUnusedParameterInspection */$index, $value)
+    public function get(int $index)
     {
-        throw new ImmutableObjectException($this);
+        return $this->_get($index, true);
+    }
+
+    /**
+     * @param $offset
+     *
+     * @return null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->_get($offset, true);
     }
 
     /**
@@ -43,6 +52,16 @@ class ImmutableVector extends ImmutableCollection
     /**
      * @param $offset
      *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->_isset($offset, true);
+    }
+
+    /**
+     * @param $offset
+     *
      * @throws ImmutableObjectException
      */
     public function offsetUnset(/** @noinspection PhpUnusedParameterInspection */$offset)
@@ -51,16 +70,40 @@ class ImmutableVector extends ImmutableCollection
     }
 
     /**
-     * remove element by index
+     *  Find index of element
      *
-     * @param int|Integer $index
-     * @param int|Integer|NULL $length
+     * @param mixed $target
+     * @param int|NULL $start
      *
-     * @throws ImmutableObjectException
+     * @return bool|int
      */
-    public function removeAt(/** @noinspection PhpUnusedParameterInspection */int $index, int $length = null)
+    public function indexOf($target, int $start = NULL )
     {
-        throw new ImmutableObjectException($this);
+        return $this->_indexOf($target, $start);
+    }
+
+    /**
+     * Get head element of the array
+     *
+     * @param callable $callback
+     *
+     * @return mixed
+     */
+    public function first(callable $callback = null)
+    {
+        return $this->_first($callback);
+    }
+
+    /**
+     * Get tail element of the array
+     *
+     * @param callable $callback
+     *
+     * @return mixed
+     */
+    public function last(callable $callback = null)
+    {
+        return $this->_last($callback);
     }
 
 

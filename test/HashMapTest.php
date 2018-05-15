@@ -56,7 +56,7 @@ class HashMapTest extends TestCase
         $map = new HashMap(['age' => 21, 'name' => 'David']);
 
         $ret = $map->set('age', 22);
-        $this->assertSame(['age' => 21, 'name' => 'David'], $map->toArray());   // immutable
+        $this->assertSame(['age' => 22, 'name' => 'David'], $map->toArray());
         $this->assertSame(['age' => 22, 'name' => 'David'], $ret->toArray());
         $this->assertInstanceOf(HashMap::class, $ret);
     }

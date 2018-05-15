@@ -21,13 +21,13 @@ class StackTest extends TestCase
     {
         $stack = new Stack(['apple', 'banana', 'kiwi']);
         $ret = $stack->push('orange');
-        $this->assertSame(['apple', 'banana', 'kiwi'], $stack->toArray());    // immutable
+        $this->assertSame(['apple', 'banana', 'kiwi', 'orange'], $stack->toArray());
         $this->assertSame(['apple', 'banana', 'kiwi', 'orange'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
 
         $stack = new Stack(['apple', 'banana', 'kiwi']);
         $ret = $stack->push('orange', 'mango');
-        $this->assertSame(['apple', 'banana', 'kiwi'], $stack->toArray());    // immutable
+        $this->assertSame(['apple', 'banana', 'kiwi', 'orange', 'mango'], $stack->toArray());
         $this->assertSame(['apple', 'banana', 'kiwi', 'orange', 'mango'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
     }
@@ -35,13 +35,15 @@ class StackTest extends TestCase
     {
         $stack = new Stack(['apple', 'banana', 'kiwi']);
         $ret = $stack->pop($item);
-        $this->assertSame(['apple', 'banana', 'kiwi'], $stack->toArray());    // immutable
+        $this->assertSame(['apple', 'banana'], $stack->toArray());
         $this->assertSame(['apple', 'banana'], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
         $this->assertSame('kiwi', $item);
 
-        $ret = $ret->pop($item);
-        $this->assertSame(['apple', 'banana', 'kiwi'], $stack->toArray());    // immutable
+        $ret = $stack->pop($item);
+        $this->assertSame(['apple'], $stack->toArray());
         $this->assertSame(['apple'], $ret->toArray());
+        $this->assertInstanceOf(Stack::class, $ret);
         $this->assertSame('banana', $item);
     }
     public function testPeek()
@@ -55,7 +57,7 @@ class StackTest extends TestCase
     {
         $list = new Stack(['apple', 'banana', 'kiwi']);
         $ret = $list->reverse();
-        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['kiwi', 'banana', 'apple'], $list->toArray());
         $this->assertSame(['kiwi', 'banana', 'apple'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
     }
@@ -63,14 +65,14 @@ class StackTest extends TestCase
     {
         $list = new Stack(['apple', 'banana', 'kiwi']);
         $ret = $list->replace('apple', 'mango');
-        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['mango', 'banana', 'kiwi'], $list->toArray());
         $this->assertSame(['mango', 'banana', 'kiwi'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
 
         $list = new Stack(['apple', 'banana', 'kiwi']);
         $ret = $list->replace('banana', 'orange');
         $this->assertInstanceOf(Stack::class, $list->replace('banana', 'orange'));
-        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['apple', 'orange', 'kiwi'], $list->toArray());
         $this->assertSame(['apple', 'orange', 'kiwi'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
     }
@@ -79,7 +81,7 @@ class StackTest extends TestCase
         $list = new Stack(['apple', 'banana', 'kiwi']);
         $replace = ['apple' => 'mango', 'banana' => 'orange'];
         $ret = $list->replaceAll($replace);
-        $this->assertSame(['apple', 'banana', 'kiwi'], $list->toArray());   // immutable
+        $this->assertSame(['mango', 'orange', 'kiwi'], $list->toArray());
         $this->assertSame(['mango', 'orange', 'kiwi'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
     }
@@ -93,7 +95,7 @@ class StackTest extends TestCase
 
         $list = new Stack([12, 3, -1, 0, 4, 1.2, 'kiwi', 'apple']);
         $ret = $list->sort();
-        $this->assertSame([12, 3, -1, 0, 4, 1.2, 'kiwi', 'apple'], $list->toArray());   // immutable
+        $this->assertSame([-1, 0, 'apple', 'kiwi', 1.2, 3, 4, 12], $list->toArray());
         $this->assertSame([-1, 0, 'apple', 'kiwi', 1.2, 3, 4, 12], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
 
@@ -101,7 +103,7 @@ class StackTest extends TestCase
         $ret = $list->sort(function($a, $b){
             return strlen(strval($a)) - strlen(strval($b));
         });
-        $this->assertSame([12, 3, -1, 0, 4, 1.2, 'kiwi', 'apple'], $list->toArray());   // immutable
+        $this->assertSame([3, 0, 4, 12, -1, 1.2, 'kiwi', 'apple'], $list->toArray());
         $this->assertSame([3, 0, 4, 12, -1, 1.2, 'kiwi', 'apple'], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
     }
@@ -115,11 +117,11 @@ class StackTest extends TestCase
         ]);
         $ret = $list->sortBy('name');
         $this->assertSame([
+            [ 'name' => 'Alisa', 'age' => 28, 'height' => 166.1 ],
             [ 'name' => 'David', 'age' => 21, 'height' => 172.2 ],
             [ 'name' => 'Elen', 'age' => 25, 'height' => 155.6 ],
-            [ 'name' => 'Alisa', 'age' => 28, 'height' => 166.1 ],
             [ 'name' => 'Eva', 'age' => 20, 'height' => 170.0 ],
-        ], $list->toArray());   // immutable
+        ], $list->toArray());
         $this->assertSame([
             [ 'name' => 'Alisa', 'age' => 28, 'height' => 166.1 ],
             [ 'name' => 'David', 'age' => 21, 'height' => 172.2 ],
@@ -130,11 +132,11 @@ class StackTest extends TestCase
 
         $ret = $list->sortBy('age');
         $this->assertSame([
+            [ 'name' => 'Eva', 'age' => 20, 'height' => 170.0 ],
             [ 'name' => 'David', 'age' => 21, 'height' => 172.2 ],
             [ 'name' => 'Elen', 'age' => 25, 'height' => 155.6 ],
             [ 'name' => 'Alisa', 'age' => 28, 'height' => 166.1 ],
-            [ 'name' => 'Eva', 'age' => 20, 'height' => 170.0 ],
-        ], $list->toArray());   // immutable
+        ], $list->toArray());
         $this->assertSame([
             [ 'name' => 'Eva', 'age' => 20, 'height' => 170.0 ],
             [ 'name' => 'David', 'age' => 21, 'height' => 172.2 ],
@@ -147,11 +149,11 @@ class StackTest extends TestCase
             return $a - $b;
         });
         $this->assertSame([
-            [ 'name' => 'David', 'age' => 21, 'height' => 172.2 ],
             [ 'name' => 'Elen', 'age' => 25, 'height' => 155.6 ],
             [ 'name' => 'Alisa', 'age' => 28, 'height' => 166.1 ],
             [ 'name' => 'Eva', 'age' => 20, 'height' => 170.0 ],
-        ], $list->toArray());   // immutable
+            [ 'name' => 'David', 'age' => 21, 'height' => 172.2 ],
+        ], $list->toArray());
         $this->assertSame([
             [ 'name' => 'Elen', 'age' => 25, 'height' => 155.6 ],
             [ 'name' => 'Alisa', 'age' => 28, 'height' => 166.1 ],

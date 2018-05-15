@@ -1,6 +1,8 @@
 <?php
 namespace Calgamo\Collection\Util;
 
+use CAlgamo\Util\EqualableInterface;
+
 trait PhpArrayTrait
 {
     /**
@@ -81,7 +83,6 @@ trait PhpArrayTrait
             $index = $this->_rindex($index, $values);
         }
         unset($values[$index]);
-        $this->setValues($values);
         return $values;
     }
 
@@ -413,4 +414,35 @@ trait PhpArrayTrait
         });
         return $values;
     }
+
+    /**
+     *  Find index of element
+     *
+     * @param mixed $target
+     * @param int|NULL $start
+     *
+     * @return bool|int
+     */
+    private function _indexOf($target, int $start = NULL )
+    {
+        $values = $this->getValues();
+        if ( $start === NULL ){
+            $start = 0;
+        }
+        $size = count($values);
+        for( $i=$start; $i < $size; $i++ ){
+            $item = $values[$i];
+            if ($item instanceof EqualableInterface){
+                if ( $item->equals($target) ){
+                    return $i;
+                }
+            }
+            else if ($item === $target){
+                return $i;
+            }
+        }
+
+        return FALSE;
+    }
+
 }

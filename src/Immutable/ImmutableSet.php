@@ -1,10 +1,10 @@
 <?php
 namespace Calgamo\Collection\Immutable;
 
-use Calgamo\Collection\Util\SetTrait;
+use Calgamo\Collection\Util\PhpArrayTrait;
 
 class ImmutableSet extends ImmutableCollection
 {
-    use SetTrait;
+    use PhpArrayTrait;
 
 }

@@ -1,12 +1,12 @@
 <?php
 namespace Calgamo\Collection\Immutable;
 
-use Calgamo\Collection\Util\StackTrait;
+use Calgamo\Collection\Util\PhpArrayTrait;
 use Calgamo\Collection\Exception\ImmutableObjectException;
 
 class ImmutableStack extends ImmutableCollection
 {
-    use StackTrait;
+    use PhpArrayTrait;
 
     /**
      * @return ImmutableStack
