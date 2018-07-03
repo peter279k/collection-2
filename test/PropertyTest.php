@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use Calgamo\Test\TestCase\PhpUnitTestCase;
 
 use Calgamo\Collection\Property;
@@ -23,13 +25,13 @@ class PropertyTest extends PhpUnitTestCase
         ]);
         
         $value = $this->callPrivateMethod($property, 'getPropertyNodeValue', 'b/d/f/g');
-        $this->assertSame( 4, $value );
+        $this->assertSame(4, $value);
     
         $value = $this->callPrivateMethod($property, 'getPropertyNodeValue', 'b/x');
-        $this->assertNull( $value );
+        $this->assertNull($value);
     
         $value = $this->callPrivateMethod($property, 'getPropertyNodeValue', 'x');
-        $this->assertNull( $value );
+        $this->assertNull($value);
     }
     
     public function testGetIntegerHierarchy()
@@ -47,9 +49,43 @@ class PropertyTest extends PhpUnitTestCase
             ]
         ]);
         
-        $this->assertSame( 1, $property->getInteger('a') );
-        $this->assertSame( 2, $property->getInteger('b/c') );
-        $this->assertSame( 3, $property->getInteger('b/d/e') );
-        $this->assertSame( 4, $property->getInteger('b/d/f/g') );
+        $this->assertSame(1, $property->getInteger('a'));
+        $this->assertSame(2, $property->getInteger('b/c'));
+        $this->assertSame(3, $property->getInteger('b/d/e'));
+        $this->assertSame(4, $property->getInteger('b/d/f/g'));
+    }
+    public function testGet()
+    {
+        $property = new Property([
+            'a' => 1,
+            'b' => [
+                'c' => 2,
+                'd' => [
+                    'e' => 3,
+                    'f' => [
+                        'g' => 4
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertSame(1, $property->get('a'));
+    }
+    public function testGetString()
+    {
+        $property = new Property([
+            'a' => 1,
+            'b' => [
+                'c' => 2,
+                'd' => [
+                    'e' => 3,
+                    'f' => [
+                        'g' => 4
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertSame('1', $property->getString('a'));
     }
 }

@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\ArrayList;
 use Calgamo\Collection\Immutable\ImmutableArrayList;
@@ -10,7 +12,7 @@ class ArrayListTest extends TestCase
         $list = new ArrayList();
 
         $this->assertInstanceOf(ImmutableArrayList::class, $list->freeze());
-        $this->assertSame([], $list->freeze()->toArray());
+        $this->assertCount(0, $list->freeze()->toArray());
 
         $list = new ArrayList(['apple', 'banana', 'kiwi']);
 
@@ -70,7 +72,7 @@ class ArrayListTest extends TestCase
         $this->assertSame([], $list->toArray());
         $this->assertSame([], $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
-        $this->assertSame(null, $item);
+        $this->assertNull($item);
     }
     public function testFirst()
     {
@@ -95,7 +97,7 @@ class ArrayListTest extends TestCase
     public function testRemove()
     {
         $list = new ArrayList(['apple', 'banana', 'kiwi']);
-        $ret = $list->remove(1,1);
+        $ret = $list->remove(1, 1);
         $this->assertSame(['apple', 'kiwi'], $list->toArray());
         $this->assertSame(['apple', 'kiwi'], $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
@@ -107,7 +109,7 @@ class ArrayListTest extends TestCase
         $this->assertInstanceOf(ArrayList::class, $ret);
 
         $list = new ArrayList(['apple', 'banana', 'kiwi']);
-        $ret = $list->remove(-2,2);
+        $ret = $list->remove(-2, 2);
         $this->assertSame(['apple'], $list->toArray());
         $this->assertSame(['apple'], $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
@@ -128,16 +130,16 @@ class ArrayListTest extends TestCase
         $this->assertSame('banana', $item);
 
         $ret = $list->shift($item);
-        $this->assertSame([], $list->toArray());
-        $this->assertSame([], $ret->toArray());
+        $this->assertCount(0, $list->toArray());
+        $this->assertCount(0, $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
         $this->assertSame('kiwi', $item);
 
         $ret = $list->shift($item);
-        $this->assertSame([], $list->toArray());
-        $this->assertSame([], $ret->toArray());
+        $this->assertCount(0, $list->toArray());
+        $this->assertCount(0, $ret->toArray());
         $this->assertInstanceOf(ArrayList::class, $ret);
-        $this->assertSame(null, $item);
+        $this->assertNull($item);
     }
     public function testUnshift()
     {

@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\Set;
 use Calgamo\Collection\Immutable\ImmutableSet;
@@ -10,7 +12,7 @@ class SetTest extends TestCase
         $set = new Set();
 
         $this->assertInstanceOf(ImmutableSet::class, $set->freeze());
-        $this->assertSame([], $set->freeze()->toArray());
+        $this->assertCount(0, $set->freeze()->toArray());
 
         $set = new Set(['apple', 'banana', 'kiwi']);
 
@@ -76,5 +78,10 @@ class SetTest extends TestCase
         $this->assertSame([1, false, 1, true], $set->toArray());
         $this->assertSame([1, false, 1, true], $ret->toArray());
         $this->assertInstanceOf(Set::class, $ret);
+    }
+    public function testRemoveAll()
+    {
+        $set = new Set([1, false, 3.4, 1, true]);
+        $this->assertCount(0, $set->removeAll([1, false, 3.4, 1, true]));
     }
 }

@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\Stack;
 use Calgamo\Collection\Immutable\ImmutableStack;
@@ -10,7 +12,7 @@ class StackTest extends TestCase
         $stack = new Stack();
 
         $this->assertInstanceOf(ImmutableStack::class, $stack->freeze());
-        $this->assertSame([], $stack->freeze()->toArray());
+        $this->assertCount(0, $stack->freeze()->toArray());
 
         $stack = new Stack(['apple', 'banana', 'kiwi']);
 
@@ -56,7 +58,7 @@ class StackTest extends TestCase
         $this->assertSame([], $stack->toArray());
         $this->assertSame([], $ret->toArray());
         $this->assertInstanceOf(Stack::class, $ret);
-        $this->assertSame(null, $item);
+        $this->assertNull($item);
     }
     public function testPeek()
     {

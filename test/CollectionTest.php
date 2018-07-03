@@ -1,78 +1,86 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\Collection;
+use Calgamo\Collection\Collection\Immutable\ImmutableCollection;
 
 class CollectionTest extends TestCase
 {
+    public function testFreeze()
+    {
+        $collection = new Collection([1, 2, 3]);
+        $this->assertSame([1, 2, 3], $collection->freeze()->toArray());
+    }
     public function testIsEmpty()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertSame( false, $collection->isEmpty() );
+        $this->assertFalse($collection->isEmpty());
 
         $collection = new Collection([]);
-        $this->assertSame( true, $collection->isEmpty() );
+        $this->assertTrue($collection->isEmpty());
     }
     public function testSerializeUnserialize()
     {
         $collection = new Collection(['apple', 'banana', 'kiwi']);
 
         $data = $collection->serialize();
-        $this->assertSame( 'a:3:{i:0;s:5:"apple";i:1;s:6:"banana";i:2;s:4:"kiwi";}', $data );
+        $this->assertSame('a:3:{i:0;s:5:"apple";i:1;s:6:"banana";i:2;s:4:"kiwi";}', $data);
 
         $collection->unserialize($data);
-        $this->assertSame( ['apple', 'banana', 'kiwi'], $collection->toArray() );
+        $this->assertSame(['apple', 'banana', 'kiwi'], $collection->toArray());
     }
     public function testCount()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertSame( 3, $collection->count() );
+        $this->assertSame(3, $collection->count());
 
         $collection = new Collection([]);
-        $this->assertSame( 0, $collection->count() );
+        $this->assertSame(0, $collection->count());
     }
     public function testContains()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertSame( false, $collection->contains(0) );
-        $this->assertSame( true, $collection->contains(1) );
-        $this->assertSame( false, $collection->contains(null) );
+        $this->assertFalse($collection->contains(0));
+        $this->assertTrue($collection->contains(1));
+        $this->assertFalse($collection->contains(null));
 
         $collection = new Collection([1, false, 3.4, 1, true]);
-        $this->assertSame( false, $collection->contains(0) );
-        $this->assertSame( true, $collection->contains(3.4) );
-        $this->assertSame( true, $collection->contains(1) );
-        $this->assertSame( true, $collection->contains(3.4, 1) );
-        $this->assertSame( false, $collection->contains(3.4, 1, 0) );
-        $this->assertSame( true, $collection->contains(3.4, 1, true) );
+        $this->assertFalse($collection->contains(0));
+        $this->assertTrue($collection->contains(3.4));
+        $this->assertTrue($collection->contains(1));
+        $this->assertTrue($collection->contains(3.4, 1));
+        $this->assertFalse($collection->contains(3.4, 1, 0));
+        $this->assertTrue($collection->contains(3.4, 1, true));
     }
     public function testContainsAll()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertSame( false, $collection->containsAll([0]) );
-        $this->assertSame( true, $collection->containsAll([1]) );
-        $this->assertSame( false, $collection->containsAll([null]) );
+        $this->assertFalse($collection->containsAll([0]));
+        $this->assertTrue($collection->containsAll([1]));
+        $this->assertFalse($collection->containsAll([null]));
 
         $collection = new Collection([1, false, 3.4, 1, true]);
-        $this->assertSame( false, $collection->containsAll([0]) );
-        $this->assertSame( true, $collection->containsAll([3.4]) );
-        $this->assertSame( true, $collection->containsAll([1]) );
-        $this->assertSame( true, $collection->containsAll([3.4, 1]) );
-        $this->assertSame( false, $collection->containsAll([3.4, 1, 0]) );
-        $this->assertSame( true, $collection->containsAll([3.4, 1, true]) );
-        $this->assertSame( true, $collection->containsAll(new Collection([3.4, 1, true])) );
+        $this->assertFalse($collection->containsAll([0]));
+        $this->assertTrue($collection->containsAll([3.4]));
+        $this->assertTrue($collection->containsAll([1]));
+        $this->assertTrue($collection->containsAll([3.4, 1]));
+        $this->assertFalse($collection->containsAll([3.4, 1, 0]));
+        $this->assertTrue($collection->containsAll([3.4, 1, true]));
+        $this->assertTrue($collection->containsAll(new Collection([3.4, 1, true])));
     }
     public function testClear()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertSame( [1, 2, 3], $collection->toArray() );
+        $this->assertSame([1, 2, 3], $collection->toArray());
         $ret = $collection->empty();
-        $this->assertSame( [], $collection->toArray() );
-        $this->assertSame( [], $ret->toArray() );
+        $this->assertCount(0, $collection->toArray());
+        $this->assertCount(0, $ret->toArray());
     }
     public function testGetIterator()
     {
         $collection = new Collection([1, 2, 3]);
-        $this->assertInstanceOf(\Iterator::class, $collection->getIterator() );
+        $this->assertInstanceOf(\Iterator::class, $collection->getIterator());
     }
     public function testMap()
     {

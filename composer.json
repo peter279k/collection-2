@@ -25,5 +25,10 @@
     "psr-4": {
       "Calgamo\\Collection\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Calgamo\\Collection\\Tests\\": "test/"
+    }
   }
 }

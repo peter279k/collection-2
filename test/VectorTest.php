@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 
 use Calgamo\Collection\Vector;
@@ -82,6 +84,12 @@ class VectorTest extends TestCase
         $vec = new Vector([1, 2, 3]);
         unset($vec[2]);
         $this->assertSame([0 => 1, 1 => 2], $vec->toArray());
+    }
+    public function testIndexOf()
+    {
+        $vec = new Vector([1, 2, 3]);
+        $this->assertSame(2, $vec->indexOf(3));
+        $this->assertFalse($vec->indexOf(4));
     }
     public function testPush()
     {

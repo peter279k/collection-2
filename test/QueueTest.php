@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\Queue;
 use Calgamo\Collection\Immutable\ImmutableQueue;
@@ -10,7 +12,7 @@ class QueueTest extends TestCase
         $queue = new Queue();
 
         $this->assertInstanceOf(ImmutableQueue::class, $queue->freeze());
-        $this->assertSame([], $queue->freeze()->toArray());
+        $this->assertCount(0, $queue->freeze()->toArray());
 
         $queue = new Queue(['apple', 'banana', 'kiwi']);
 

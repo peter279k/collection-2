@@ -1,4 +1,6 @@
 <?php
+namespace Calgamo\Collection\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Calgamo\Collection\HashMap;
 use Calgamo\Collection\Immutable\ImmutableHashMap;
@@ -10,7 +12,7 @@ class HashMapTest extends TestCase
         $map = new HashMap();
 
         $this->assertInstanceOf(ImmutableHashMap::class, $map->freeze());
-        $this->assertSame([], $map->freeze()->toArray());
+        $this->assertCount(0, $map->freeze()->toArray());
 
         $map = new HashMap(['age' => 21, 'name' => 'David']);
 
@@ -47,8 +49,8 @@ class HashMapTest extends TestCase
 
         $this->assertSame(21, $map->get('age'));
         $this->assertSame('David', $map->get('name'));
-        $this->assertSame(null, $map->get('height'));
-        $this->assertSame(null, $map->get(-1));
+        $this->assertNull($map->get('height'));
+        $this->assertNull($map->get(-1));
         $this->assertSame(['age' => 21, 'name' => 'David'], $map->toArray());   // immutable
     }
     public function testSet()
@@ -66,8 +68,8 @@ class HashMapTest extends TestCase
 
         $this->assertSame(21, $map['age']);
         $this->assertSame('David', $map['name']);
-        $this->assertSame(null, $map['height']);
-        $this->assertSame(null, $map[-1]);
+        $this->assertNull($map['height']);
+        $this->assertNull($map[-1]);
         $this->assertSame(['age' => 21, 'name' => 'David'], $map->toArray());   // immutable
     }
     public function testOffsetSet()
@@ -77,17 +79,19 @@ class HashMapTest extends TestCase
         $this->assertSame(21, $map['age']);
         $map['age'] = 22;
         $this->assertSame(22, $map['age']);
-        $this->assertSame(null, $map[-1]);
+        $this->assertNull($map[-1]);
         $this->assertSame(['age' => 22, 'name' => 'David'], $map->toArray());
     }
     public function testOffsetExists()
     {
         $map = new HashMap(['age' => 21, 'name' => 'David']);
 
-        $this->assertTrue(isset($map['age']));
-        $this->assertTrue(isset($map['name']));
-        $this->assertFalse(isset($map['height']));
-        $this->assertFalse(isset($map[-1]));
+        $this->assertNotEmpty($map['age']);
+        $this->assertNotEmpty($map['name']);
+        $this->assertEmpty($map['height']);
+        $this->assertEmpty($map[-1]);
+        $this->assertFalse($map->offsetExists(-1));
+        $this->assertTrue($map->offsetExists('age'));
         $this->assertSame(['age' => 21, 'name' => 'David'], $map->toArray());   // immutable
     }
     public function testOffsetUnset()
